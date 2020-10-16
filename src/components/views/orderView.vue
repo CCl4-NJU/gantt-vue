@@ -10,7 +10,7 @@
 <script>
 /* eslint-disable */
 import OrderGantt from '../sub/OrderGantt.vue'
- import axios from 'axios'
+import axios from 'axios'
 export default {
   name: 'order',
   components: {OrderGantt},
