@@ -10,6 +10,16 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
 
+//为了模拟数据进行的配置修改
+const express = require('express')
+const app = express()
+var productP3Data = require('../static/mock/product-p3-2020-10-01.json')
+var resourceData = require('../static/mock/resource-2020-10-01.json')
+var orderData = require('../static/mock/order-2020-10-01.json')
+
+var apiRoutes = express.Router()
+app.use(apiRoutes)
+
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
 
@@ -42,6 +52,18 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     quiet: true, // necessary for FriendlyErrorsPlugin
     watchOptions: {
       poll: config.dev.poll,
+    },
+    //模拟数据配置项
+    before(app) {
+      app.get('/product-p3-2020-10-01', (req, res) => {
+        res.json(productP3Data)
+      })
+      app.get('/resource-2020-10-01', (req, res) => {
+        res.json(resourceData)
+      })
+      app.get('/order-2020-10-01', (req, res) => {
+        res.json(orderData)
+      })
     }
   },
   plugins: [
