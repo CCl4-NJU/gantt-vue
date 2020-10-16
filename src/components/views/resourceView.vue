@@ -6,10 +6,10 @@
 
 <script>
 /* eslint-disable */
-import ResourceGantt from './components/ResourceGantt.vue';
- 
+import ResourceGantt from '../sub/ResourceGantt.vue';
+
 export default {
-  name: 'main',
+  name: 'resource',
   components: {ResourceGantt},
   data () {
     return {

@@ -9,10 +9,10 @@
 
 <script>
 /* eslint-disable */
-import OrderGantt from './components/OrderGantt.vue';
- 
+import OrderGantt from '../sub/OrderGantt.vue'
+
 export default {
-  name: 'page',
+  name: 'order',
   components: {OrderGantt},
   data () {
     return {
@@ -69,8 +69,8 @@ export default {
             parent: 3
           },
           {
-            id: 5, 
-            number: "764486", 
+            id: 5,
+            number: "764486",
             text: "装配",
             start_date: "2020-10-01 07:00",
             duration: 6 * 60,
@@ -81,7 +81,7 @@ export default {
             expc_date: "2020年10月5日"
           },
           {
-            id: 6, 
+            id: 6,
             number: "764486",
             text: "装配60%",
             start_date: "2020-10-01 07:00",

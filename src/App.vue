@@ -1,19 +1,29 @@
 <template>
   <div class="container">
-    <product-gantt class="left-container" :tasks="tasks"></product-gantt>
-    <router-link to='/order'>
+    <!-- <product-gantt class="left-container" :tasks="tasks"></product-gantt> -->
+    <p><router-link to='/HelloWorld'>
+      Jump to see HelloWorld...
+    </router-link></p>
+    <p><router-link to='/order'>
       Jump to see order gantt...
-    </router-link>
+    </router-link></p>
+    <p><router-link to='/product'>
+      Jump to see product gantt...
+    </router-link></p>
+    <p><router-link to='/resource'>
+      Jump to see resource gantt...
+    </router-link></p>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 /* eslint-disable */
-import ProductGantt from './components/ProductGantt.vue';
- 
+// import ProductGantt from './components/ProductGantt.vue';
+
 export default {
   name: 'app',
-  components: {ProductGantt},
+  // components: {ProductGantt},
   data () {
     return {
       tasks: {

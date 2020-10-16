@@ -9,10 +9,10 @@
 
 <script>
 /* eslint-disable */
-import ProductGantt from './components/ProductGantt.vue';
- 
+import ProductGantt from '../sub/ProductGantt.vue';
+
 export default {
-  name: 'app',
+  name: 'product',
   components: {ProductGantt},
   data () {
     return {
