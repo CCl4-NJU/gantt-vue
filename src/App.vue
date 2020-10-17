@@ -78,6 +78,34 @@ export default {
           this.activeIndex = "4";
           break;
       }
+    },
+    sendMessage(data, url, method){ //发送信息模板函数，可能需要增加一个请求标志位以防止并发错误
+      console.log("--------sendMessage--------");
+      console.log("--------url: "+url);
+      console.log("--------method: "+method);
+      console.log("--------data:  "+data);
+      return "1234";  //测试用
+
+      var xmlhttp = new XMLHttpRequest();
+      var self = this;
+
+      if(method == "get"){
+        url = url+data; //未测试，大概率有问题
+        xmlhttp.open('get', url , true);
+        xmlhttp.send()
+      }
+      else if(method == "post"){
+        xmlhttp.open('post', url , true);
+        xmlhttp.setRequestHeader("Content-type", "application/json");
+        xmlhttp.send(data);
+      }
+      xmlhttp.onreadystatechange = function () {
+          if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
+      		var ans = xmlhttp.responseText;
+      		console.log(ans);
+      		return ans;
+      	}
+      }
     }
   },
   mounted () {

@@ -55,15 +55,18 @@ export default {
     return {
       dataLoaded: false,
       tasks: {},
-      options: [{
+      value: 'hour',  //当前展示模式是按小时展示还是按天展示
+      timeValue: "",  //如果是按小时展示的话，时间数值，变化时触发timechange函数
+      dateRange: "",  //如果是按天展示的话，时间区间，List格式，dateRange[0]~dateRange[1]，变化时触发rangeChange函数
+
+      options: [{ //模式选项
         value: 'hour',
         label: '按小时显示'
       }, {
         value: 'day',
         label: '按天显示'
       }],
-      value: 'hour',
-      pickerOptions: {
+      pickerOptions: {  //快捷时间选项
         disabledDate(time) {
           return time.getTime() > Date.now();
         },
@@ -115,8 +118,6 @@ export default {
           }
         }]
       },
-      timeValue: "",
-      dateRange: "",
     }
   },
   methods: {
@@ -145,13 +146,21 @@ export default {
     },
     timeChange(){
        console.log(this.timeValue);
+       var ans = this.$parent.sendMessage(this.timeValue, "/backendUrl", "get");
+       console.log("child get Ans: "+ans);
+       //todo 根据接收到的数据设置图
     },
     rangeChange(){
       console.log(this.dateRange);
+      var ans = this.$parent.sendMessage(this.dateRange, "/backendUrl", "get");
+      console.log("child get Ans: "+ans);
+      //todo 根据接收到的数据设置图
     }
   },
   mounted () {
     this.getProductInfo();
+    this.timeValue = "2020-10-17";
+    this.timeChange();
   }
 }
 </script>

@@ -57,6 +57,10 @@ export default {
     return {
       dataLoaded: false,
       tasks: {},
+      value: 'hour',  //以下变量含义与productView相同
+      timeValue: "",
+      dateRange: "",
+
       options: [{
         value: 'hour',
         label: '按小时显示'
@@ -64,7 +68,6 @@ export default {
         value: 'day',
         label: '按天显示'
       }],
-      value: 'hour',
       pickerOptions: {
         disabledDate(time) {
           return time.getTime() > Date.now();
@@ -117,8 +120,6 @@ export default {
           }
         }]
       },
-      timeValue: "",
-      dateRange: "",
     }
   },
   methods: {
@@ -147,13 +148,21 @@ export default {
     },
     timeChange(){
        console.log(this.timeValue);
+       var ans = this.$parent.sendMessage(this.timeValue, "/backendUrl", "get");
+       console.log("child get Ans: "+ans);
+       //todo 根据接收到的数据设置图
     },
     rangeChange(){
       console.log(this.dateRange);
+      var ans = this.$parent.sendMessage(this.dateRange, "/backendUrl", "get");
+      console.log("child get Ans: "+ans);
+      //todo 根据接收到的数据设置图
     }
   },
   mounted () {
     this.getResourceInfo()
+    this.timeValue = "2020-10-17";
+    this.timeChange();
   }
 }
 </script>

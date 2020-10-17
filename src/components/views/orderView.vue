@@ -39,7 +39,12 @@ export default {
     return {
       dataLoaded: false,
       tasks: {},
-      pickerOptions: {
+      timeValue: '',  //当前选择时间，变化时触发timechange函数
+      ddl: '2017年10月1日' , //中间按期交货率的截至日期说明
+      percentage: 70, //按期交货率
+      status: 'warning',  //按期交货率颜色，根据百分比自动变化，在setProgress函数中自动设置
+                          // <60为红色，60~80为橙色，80~100为绿色
+      pickerOptions: {  //快捷时间选择的设置
         disabledDate(time) {
           return time.getTime() > Date.now();
         },
@@ -64,10 +69,6 @@ export default {
           }
         }]
       },
-      timeValue: '',
-      ddl: '2017年10月1日' ,
-      percentage: 70,
-      status: 'warning',
     }
   },
   methods: {
@@ -82,7 +83,9 @@ export default {
         })
     },
     timeChange(){
-      console.log(this.timeValue);
+      var ans = this.$parent.sendMessage(this.timeValue, "/backendUrl", "get");
+      console.log("child get Ans: "+ans);
+      //todo 根据接收到的数据设置图和按期交货率
     },
     setProgress(per){
       this.percentage = per;
@@ -103,6 +106,8 @@ export default {
   mounted () {
     this.getOrderInfo();
     this.setProgress(92);
+    this.timeValue = "2020-10-17";
+    this.timeChange();
   },
 }
 </script>
