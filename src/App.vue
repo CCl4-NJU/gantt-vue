@@ -1,18 +1,17 @@
 <template>
-  <div class="container">
-    <!-- <product-gantt class="left-container" :tasks="tasks"></product-gantt> -->
-    <p><router-link to='/HelloWorld'>
-      Jump to see HelloWorld...
-    </router-link></p>
-    <p><router-link to='/order'>
-      Jump to see order gantt...
-    </router-link></p>
-    <p><router-link to='/product'>
-      Jump to see product gantt...
-    </router-link></p>
-    <p><router-link to='/resource'>
-      Jump to see resource gantt...
-    </router-link></p>
+  <div id="appContainer">
+    <el-row id="head">
+      <el-col :span="4" id="img"> <img src="./assets/APS_Logo.png" height="50" width="100"/> </el-col>
+      <el-col :span="16">
+        <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+           <el-menu-item index="1">订单甘特图</el-menu-item>
+           <el-menu-item index="2">产品路线图</el-menu-item>
+           <el-menu-item index="3">资源甘特图</el-menu-item>
+           <el-menu-item index="4">资源负载图</el-menu-item>
+         </el-menu>
+      </el-col>
+      <el-col :span="4"></el-col>
+    </el-row>
     <router-view></router-view>
   </div>
 </template>
@@ -26,6 +25,7 @@ export default {
   // components: {ProductGantt},
   data () {
     return {
+      activeIndex: "1",
       dataLoaded: false,
       tasks: {}
     }
@@ -40,10 +40,49 @@ export default {
             this.dataLoaded = true
           }
         })
+    },
+    handleSelect(key, keyPath){
+      if(key == this.activeIndex){
+        console.log("redundant key"+key);
+        return;
+      }
+      this.activeIndex = key;
+      switch(key){
+        case "1":
+          this.$router.push('/order');
+          break;
+        case "2":
+          this.$router.push("/product");
+          break;
+        case "3":
+          this.$router.push("/resource");
+          break;
+        case "4":
+          this.$router.push("/HelloWorld");
+          break;
+      }
+    },
+    initActiveIndex(){
+      var url = window.location.hash;
+      switch(url){
+        case "#/order":
+          this.activeIndex = "1";
+          break;
+        case "#/product":
+          this.activeIndex = "2";
+          break;
+        case "#/resource":
+          this.activeIndex = "3";
+          break;
+        case "#/HelloWorld":
+          this.activeIndex = "4";
+          break;
+      }
     }
   },
   mounted () {
-    this.getProductInfo()
+    this.getProductInfo();
+    this.initActiveIndex();
   }
 }
 </script>
@@ -54,13 +93,24 @@ export default {
     margin: 0;
     padding: 0;
   }
-  .container {
+  #appContainer{
+   position: fixed;
     height: 100%;
     width: 100%;
   }
-  .left-container {
+  .container {
+    position: absolute;
+    top: 3.8125rem;
+    bottom: 0rem;
+    width: 100%;
+  }
+ .left-container {
     overflow: hidden;
     position: relative;
     height: 100%;
+  }
+  #img{
+    padding-left: 2rem;
+    padding-top: 0.4375rem;
   }
 </style>

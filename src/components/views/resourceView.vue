@@ -1,5 +1,47 @@
 <template>
   <div class="container" v-if="dataLoaded">
+    <el-row id="resourceHeader">
+      <el-col :span="5" style="padding-top: 0.625rem; text-align: right;">
+        <el-select v-model="value" placeholder="请选择" @change="optionChange()">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+      </el-col>
+      <el-col :span="6" style="padding-top: 0.625rem; text-align: left;">
+        <div id="normalPicker">
+          <el-date-picker
+            v-model="timeValue"
+            align="right"
+            type="date"
+            placeholder="选择日期"
+            value-format="yyyy-MM-dd"
+            :picker-options="pickerOptions"
+            @change="timeChange">
+          </el-date-picker>
+        </div>
+        <div id="rangePicker">
+          <el-date-picker
+            v-model="dateRange"
+            type="daterange"
+            align="right"
+            unlink-panels
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            value-format="yyyy-MM-dd"
+            :picker-options="pickerOptions2"
+            @change="rangeChange">
+          </el-date-picker>
+        </div>
+      </el-col>
+      <el-col :span="13" style="padding-top: 0.625rem; padding-right: 3rem; text-align: right;">
+        <el-tag type="danger" effect="dark" id="redTag2">红色为延期订单</el-tag>
+      </el-col>
+    </el-row>
     <resource-gantt class="left-container" :tasks="tasks"></resource-gantt>
   </div>
 </template>
@@ -14,7 +56,69 @@ export default {
   data () {
     return {
       dataLoaded: false,
-      tasks: {}
+      tasks: {},
+      options: [{
+        value: 'hour',
+        label: '按小时显示'
+      }, {
+        value: 'day',
+        label: '按天显示'
+      }],
+      value: 'hour',
+      pickerOptions: {
+        disabledDate(time) {
+          return time.getTime() > Date.now();
+        },
+        shortcuts: [{
+          text: '今天',
+          onClick(picker) {
+            picker.$emit('pick', new Date());
+          }
+        }, {
+          text: '昨天',
+          onClick(picker) {
+            const date = new Date();
+            date.setTime(date.getTime() - 3600 * 1000 * 24);
+            picker.$emit('pick', date);
+          }
+        }, {
+          text: '一周前',
+          onClick(picker) {
+            const date = new Date();
+            date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+            picker.$emit('pick', date);
+          }
+        }]
+      },
+      pickerOptions2: {
+        shortcuts: [{
+          text: '最近一周',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: '最近一个月',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: '最近三个月',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+            picker.$emit('pick', [start, end]);
+          }
+        }]
+      },
+      timeValue: "",
+      dateRange: "",
     }
   },
   methods: {
@@ -27,6 +131,25 @@ export default {
             this.dataLoaded = true
           }
         })
+    },
+    optionChange(){
+      console.log("mode change: "+this.value);
+      switch(this.value){
+        case "hour":
+          document.getElementById("normalPicker").style.display = "";
+          document.getElementById("rangePicker").style.display = "none";
+          break;
+        case "day":
+          document.getElementById("normalPicker").style.display = "none";
+          document.getElementById("rangePicker").style.display = "block";
+          break;
+      }
+    },
+    timeChange(){
+       console.log(this.timeValue);
+    },
+    rangeChange(){
+      console.log(this.dateRange);
     }
   },
   mounted () {
@@ -36,18 +159,16 @@ export default {
 </script>
 
 <style>
-  html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
+  #resourceHeader{
+    height: 3.75rem;
   }
-  .container {
-    height: 100%;
-    width: 100%;
+  #rangePicker{
+    display: none;
   }
-  .left-container {
-    overflow: hidden;
+  #redTag2{
     position: relative;
-    height: 100%;
+    height: 2.5rem;
+    font-size: small;
+    padding-top: 0.25rem;
   }
 </style>
