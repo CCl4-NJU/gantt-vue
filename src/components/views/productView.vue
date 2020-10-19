@@ -40,7 +40,14 @@
       </el-col>
       <el-col :span="13"></el-col>
     </el-row>
-    <product-gantt class="left-container" :tasks="tasks"></product-gantt>
+    <product-gantt v-if="showHour"
+      class="left-container"
+      :tasks="tasks"
+    ></product-gantt>
+    <product-gantt-day v-else
+      class="left-container"
+      :tasks="tasks"
+    ></product-gantt-day>
   </div>
 </template>
 
@@ -48,10 +55,11 @@
 /* eslint-disable */
 import Common from '../../Common.vue'
 import ProductGantt from '../sub/ProductGantt.vue';
+import ProductGanttDay from '../sub/ProductGanttDay.vue';
 import axios from 'axios'
 export default {
   name: 'product',
-  components: {ProductGantt},
+  components: {ProductGantt, ProductGanttDay},
   data () {
     return {
       dataLoaded: false,
@@ -59,7 +67,7 @@ export default {
       value: 'hour',  //当前展示模式是按小时展示还是按天展示
       timeValue: "",  //如果是按小时展示的话，时间数值，变化时触发timechange函数
       dateRange: "",  //如果是按天展示的话，时间区间，List格式，dateRange[0]~dateRange[1]，变化时触发rangeChange函数
-
+      showHour: true,
       options: [{ //模式选项
         value: 'hour',
         label: '按小时显示'
@@ -149,12 +157,14 @@ export default {
        console.log(this.timeValue);
        var ans = this.$parent.sendMessage(this.timeValue, "/backendUrl", "get");
        console.log("child get Ans: "+ans);
+       this.showHour = true;
        //todo 根据接收到的数据设置图
     },
     rangeChange(){
       console.log(this.dateRange);
       var ans = this.$parent.sendMessage(this.dateRange, "/backendUrl", "get");
       console.log("child get Ans: "+ans);
+      this.showHour = false;
       //todo 根据接收到的数据设置图
     }
   },

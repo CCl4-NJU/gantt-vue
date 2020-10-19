@@ -42,7 +42,8 @@
         <el-tag type="danger" effect="dark" id="redTag2">红色为延期订单</el-tag>
       </el-col>
     </el-row>
-    <resource-gantt class="left-container" :tasks="tasks"></resource-gantt>
+    <resource-gantt v-if="showHour" class="left-container" :tasks="tasks"></resource-gantt>
+    <resource-gantt-day v-else class="left-container" :tasks="tasks"></resource-gantt-day>
   </div>
 </template>
 
@@ -50,10 +51,11 @@
 /* eslint-disable */
 import Common from '../../Common.vue'
 import ResourceGantt from '../sub/ResourceGantt.vue';
+import ResourceGanttDay from '../sub/ResourceGanttDay.vue';
 import axios from 'axios'
 export default {
   name: 'resource',
-  components: {ResourceGantt},
+  components: {ResourceGantt, ResourceGanttDay},
   data () {
     return {
       dataLoaded: false,
@@ -61,7 +63,7 @@ export default {
       value: 'hour',  //以下变量含义与productView相同
       timeValue: "",
       dateRange: "",
-
+      showHour: true,
       options: [{
         value: 'hour',
         label: '按小时显示'
@@ -151,12 +153,14 @@ export default {
        console.log(this.timeValue);
        var ans = this.$parent.sendMessage(this.timeValue, "/backendUrl", "get");
        console.log("child get Ans: "+ans);
+       this.showHour = true;
        //todo 根据接收到的数据设置图
     },
     rangeChange(){
       console.log(this.dateRange);
       var ans = this.$parent.sendMessage(this.dateRange, "/backendUrl", "get");
       console.log("child get Ans: "+ans);
+      this.showHour = false;
       //todo 根据接收到的数据设置图
     }
   },
