@@ -167,7 +167,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   #resourceHeader{
     height: 3.75rem;
   }

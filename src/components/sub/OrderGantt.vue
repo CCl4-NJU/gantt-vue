@@ -58,6 +58,12 @@ export default {
  
     gantt.init(this.$refs.ogantt);
     gantt.parse(this.$props.tasks);
+  },
+
+  computed: {
+    divKey: function () {
+      return new Date()
+    }
   }
 }
 </script>

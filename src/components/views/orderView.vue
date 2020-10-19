@@ -30,6 +30,7 @@
 
 <script>
 /* eslint-disable */
+import Common from '../../Common.vue'
 import OrderGantt from '../sub/OrderGantt.vue'
 import axios from 'axios'
 export default {
@@ -108,11 +109,15 @@ export default {
     this.setProgress(92);
     this.timeValue = "2020-10-17";
     this.timeChange();
-  },
+    if (Common.reloadFlags[0]) {
+      this.$router.go(0);
+      Common.reloadFlags[0] = false;
+    }
+  }
 }
 </script>
 
-<style>
+<style scoped>
   #headRow{
     height: 6rem;
   }

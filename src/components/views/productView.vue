@@ -165,7 +165,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   #ProductHeader{
     height: 3.75rem;
   }

@@ -18,7 +18,7 @@
 
 <script>
 /* eslint-disable */
-
+import Common from './Common.vue'
 import axios from 'axios'
 export default {
   name: 'app',
@@ -111,6 +111,12 @@ export default {
   mounted () {
     this.getProductInfo();
     this.initActiveIndex();
+  },
+  watch: {
+    activeIndex (newIndex, oldIndex) {
+      Common.reloadFlags[newIndex-1] = true;
+      Common.reloadFlags[oldIndex-1] = false;
+    }
   }
 }
 </script>

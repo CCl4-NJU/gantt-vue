@@ -1,5 +1,5 @@
 <template>
-  <div ref="gantt"></div>
+  <div ref="resgantt"></div>
 </template>
 
 <script>
@@ -58,7 +58,7 @@ export default {
     // gantt.config.multiselect_one_level = true; //在一个或任何级别内是否可以使用多任务选择
     gantt.config.readonly=true;//只读模式的甘特图
  
-    gantt.init(this.$refs.gantt);
+    gantt.init(this.$refs.resgantt);
     gantt.parse(this.$props.tasks);
   }
 }
