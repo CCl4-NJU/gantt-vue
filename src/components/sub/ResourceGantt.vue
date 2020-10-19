@@ -29,35 +29,25 @@ export default {
       // multiselect: true, //为任务激活多任务选择
     });
     gantt.config.duration_unit = "minute";
-    // gantt.templates.tooltip_date_format=function (date){
-    // 	var formatFunc = gantt.date.date_to_str("%Y-%m-%d %H:%i");
-    // 	return formatFunc(date);
-    // };
     //自定义工具栏
     gantt.templates.tooltip_text = function (start, end, task) {
         return ''
     }
-    //监测到鼠标已经离开包裹着ghtml的div的解决方案
-    // gantt.ext.tooltips.tooltipFor({
-      //   selector: '.gantt_grid [' + gantt.config.task_attribute + ']',
-      //   global: true
-      // })
-
+    
     //此处和设置时间相关
     gantt.config.start_date = new Date("2020-10-01 07:00");//时间刻度的开始时间
     gantt.config.end_date = new Date("2020-10-02 07:59");//时间刻度的结束时间
     gantt.config.scales = [
       {unit: "hour", step: 1, format: "%H:%i"} //时间刻度的显示单位
     ];
-    // gantt.attachEvent("onGanttReady", function(){
-    // 	var tooltips = gantt.ext.tooltips;
-    // 	tooltips.tooltip.setViewport(gantt.$task_data);
-    // });
-    
-    // gantt.config.multiselect = false
-    // gantt.config.multiselect_one_level = true; //在一个或任何级别内是否可以使用多任务选择
+
     gantt.config.readonly=true;//只读模式的甘特图
  
+    gantt.attachEvent("onTaskClick", function(id, e){
+      console.log("task clicked!");
+      return true;
+    });
+
     gantt.init(this.$refs.resgantt);
     gantt.parse(this.$props.tasks);
   }
