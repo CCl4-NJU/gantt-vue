@@ -46,6 +46,7 @@
 
 <script>
 /* eslint-disable */
+import Common from '../../Common.vue'
 import ProductGantt from '../sub/ProductGantt.vue';
 import axios from 'axios'
 export default {
@@ -161,6 +162,10 @@ export default {
     this.getProductInfo();
     this.timeValue = "2020-10-17";
     this.timeChange();
+    if (Common.reloadFlags[1]) {
+      this.$router.go(0);
+      Common.reloadFlags[1] = false;
+    }
   }
 }
 </script>

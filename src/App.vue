@@ -131,6 +131,7 @@ export default {
    position: fixed;
     height: 100%;
     width: 100%;
+    overflow: scroll;
   }
   .container {
     position: absolute;

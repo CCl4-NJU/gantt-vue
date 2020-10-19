@@ -48,6 +48,7 @@
 
 <script>
 /* eslint-disable */
+import Common from '../../Common.vue'
 import ResourceGantt from '../sub/ResourceGantt.vue';
 import axios from 'axios'
 export default {
@@ -163,6 +164,10 @@ export default {
     this.getResourceInfo()
     this.timeValue = "2020-10-17";
     this.timeChange();
+    if (Common.reloadFlags[2]) {
+      this.$router.go(0);
+      Common.reloadFlags[2] = false;
+    }
   }
 }
 </script>
