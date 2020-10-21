@@ -131,7 +131,7 @@ export default {
   },
   methods: {
     getProductInfo () {
-      axios.get('/product-3-2020-10-01')
+      axios.get('/product-'+this.$route.query.id+'-2020-10-01')
         .then(request => {
           var res = request.data
           if ( res.ret && res.tasks ){

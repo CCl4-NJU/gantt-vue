@@ -52,7 +52,8 @@ export default {
           this.$router.push('/order');
           break;
         case "2":
-          this.$router.push("/product");
+          //为了能够传参，为实现 resourceView 点击甘特图跳转做铺垫
+          this.$router.push({path:"/product", query:{id: 3}});
           break;
         case "3":
           this.$router.push("/resource");
@@ -68,15 +69,18 @@ export default {
         case "#/order":
           this.activeIndex = "1";
           break;
-        case "#/product":
-          this.activeIndex = "2";
-          break;
+        // case "#/product":
+        //   this.activeIndex = "2";
+        //   break;
         case "#/resource":
           this.activeIndex = "3";
           break;
         case "#/HelloWorld":
           this.activeIndex = "4";
           break;
+        //这边不知道怎么匹配"#/product?{id}"的情况，先用default
+        default:
+          this.activeIndex = "2";
       }
     },
     sendMessage(data, url, method){ //发送信息模板函数，可能需要增加一个请求标志位以防止并发错误
