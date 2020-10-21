@@ -137,7 +137,7 @@ export default {
         })
     },
     optionChange(){
-      console.log("mode change: "+this.value);
+      // console.log("mode change: "+this.value);
       switch(this.value){
         case "hour":
           document.getElementById("normalPicker").style.display = "";
@@ -150,16 +150,16 @@ export default {
       }
     },
     timeChange(){
-       console.log(this.timeValue);
+      //  console.log(this.timeValue);
        var ans = this.$parent.sendMessage(this.timeValue, "/backendUrl", "get");
-       console.log("child get Ans: "+ans);
+      //  console.log("child get Ans: "+ans);
        this.showHour = true;
        //todo 根据接收到的数据设置图
     },
     rangeChange(){
-      console.log(this.dateRange);
+      // console.log(this.dateRange);
       var ans = this.$parent.sendMessage(this.dateRange, "/backendUrl", "get");
-      console.log("child get Ans: "+ans);
+      // console.log("child get Ans: "+ans);
       this.showHour = false;
       //todo 根据接收到的数据设置图
     }

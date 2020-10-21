@@ -13,7 +13,7 @@ const portfinder = require('portfinder')
 //为了模拟数据进行的配置修改
 const express = require('express')
 const app = express()
-var productP3Data = require('../static/mock/product-p3-2020-10-01.json')
+var product3Data = require('../static/mock/product-3-2020-10-01.json')
 var resourceData = require('../static/mock/resource-2020-10-01.json')
 var orderData = require('../static/mock/order-2020-10-01.json')
 
@@ -55,8 +55,8 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     },
     //模拟数据配置项
     before(app) {
-      app.get('/product-p3-2020-10-01', (req, res) => {
-        res.json(productP3Data)
+      app.get('/product-3-2020-10-01', (req, res) => {
+        res.json(product3Data)
       })
       app.get('/resource-2020-10-01', (req, res) => {
         res.json(resourceData)

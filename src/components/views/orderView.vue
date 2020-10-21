@@ -85,7 +85,7 @@ export default {
     },
     timeChange(){
       var ans = this.$parent.sendMessage(this.timeValue, "/backendUrl", "get");
-      console.log("child get Ans: "+ans);
+      // console.log("child get Ans: "+ans);
       //todo 根据接收到的数据设置图和按期交货率
     },
     setProgress(per){

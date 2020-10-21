@@ -31,16 +31,16 @@ export default {
     }
   },
   methods: {
-    getProductInfo () {
-      axios.get('/product-p3-2020-10-01')
-        .then(request => {
-          var res = request.data
-          if ( res.ret && res.tasks ){
-            this.tasks = res.tasks
-            this.dataLoaded = true
-          }
-        })
-    },
+    // getProductInfo () {
+    //   axios.get('/product-p3-2020-10-01')
+    //     .then(request => {
+    //       var res = request.data
+    //       if ( res.ret && res.tasks ){
+    //         this.tasks = res.tasks
+    //         this.dataLoaded = true
+    //       }
+    //     })
+    // },
     handleSelect(key, keyPath){
       if(key == this.activeIndex){
         console.log("redundant key"+key);
@@ -80,10 +80,10 @@ export default {
       }
     },
     sendMessage(data, url, method){ //发送信息模板函数，可能需要增加一个请求标志位以防止并发错误
-      console.log("--------sendMessage--------");
-      console.log("--------url: "+url);
-      console.log("--------method: "+method);
-      console.log("--------data:  "+data);
+      // console.log("--------sendMessage--------");
+      // console.log("--------url: "+url);
+      // console.log("--------method: "+method);
+      // console.log("--------data:  "+data);
       return "1234";  //测试用
 
       var xmlhttp = new XMLHttpRequest();
@@ -109,7 +109,7 @@ export default {
     }
   },
   mounted () {
-    this.getProductInfo();
+    // this.getProductInfo();
     this.initActiveIndex();
   },
   watch: {
