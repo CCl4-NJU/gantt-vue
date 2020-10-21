@@ -13,7 +13,8 @@ export default {
       default () {
         return {data: [], links: []}
       }
-    }
+    },
+    start_date: String
   },
  
   mounted: function () {
@@ -41,8 +42,8 @@ export default {
       //   selector: '.gantt_grid [' + gantt.config.task_attribute + ']',
       //   global: true
       // })
-    gantt.config.start_date = new Date("2020-10-01 00:00");//时间刻度的开始时间
-    gantt.config.end_date = new Date("2020-10-02 23:59");//时间刻度的结束时间
+    gantt.config.start_date = new Date(this.start_date+" 00:00");//时间刻度的开始时间
+    gantt.config.end_date = new Date(this.start_date+" 23:59");//时间刻度的结束时间
     gantt.config.scales = [
       {unit: "hour", step: 1, format: "%H:%i"} //时间刻度的显示单位
     ];

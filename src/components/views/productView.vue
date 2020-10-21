@@ -43,10 +43,13 @@
     <product-gantt v-if="showHour"
       class="left-container"
       :tasks="tasks"
+      :start_date="timeValue"
     ></product-gantt>
     <product-gantt-day v-else
       class="left-container"
       :tasks="tasks"
+      :start_date="dateRange[0]"
+      :end_date="dateRange[1]"
     ></product-gantt-day>
   </div>
 </template>
@@ -170,11 +173,25 @@ export default {
   },
   mounted () {
     this.getProductInfo();
+    
     this.timeValue = "2020-10-17";
+    this.dateRange = [
+      "2020-10-17",
+      "2020-10-22"
+    ]
+
     this.timeChange();
     if (Common.reloadFlags[1]) {
       this.$router.go(0);
       Common.reloadFlags[1] = false;
+    }
+  },
+  watch: {
+    dateRange: function(){
+      this.showHour = true;
+    },
+    timeValue: function(){
+      this.showHour = false;
     }
   }
 }

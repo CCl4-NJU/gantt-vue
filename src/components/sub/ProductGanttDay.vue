@@ -13,7 +13,9 @@ export default {
       default () {
         return {data: [], links: []}
       }
-    }
+    },
+    start_date: String,
+    end_date: String
   },
  
   mounted: function () {
@@ -33,8 +35,8 @@ export default {
         +' - '+ new Date(end).getHours()+':'+new Date(end).getMinutes()
     }
     
-    gantt.config.start_date = new Date("2020-10-01 00:00");//时间刻度的开始时间
-    gantt.config.end_date = new Date("2020-10-05 23:59");//时间刻度的结束时间
+    gantt.config.start_date = new Date(this.start_date+" 00:00");//时间刻度的开始时间
+    gantt.config.end_date = new Date(this.end_date+" 23:59");//时间刻度的结束时间
     gantt.config.scales = [
       {unit: "day", step: 1, format: "%m-%d"} //时间刻度的显示单位
     ];
