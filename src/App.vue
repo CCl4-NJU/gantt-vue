@@ -31,16 +31,6 @@ export default {
     }
   },
   methods: {
-    // getProductInfo () {
-    //   axios.get('/product-p3-2020-10-01')
-    //     .then(request => {
-    //       var res = request.data
-    //       if ( res.ret && res.tasks ){
-    //         this.tasks = res.tasks
-    //         this.dataLoaded = true
-    //       }
-    //     })
-    // },
     handleSelect(key, keyPath){
       if(key == this.activeIndex){
         console.log("redundant key"+key);

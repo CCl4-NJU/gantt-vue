@@ -44,7 +44,20 @@ export default {
     gantt.config.readonly=true;//只读模式的甘特图
  
     gantt.attachEvent("onTaskClick", function(id, e){
-      console.log("task clicked!");
+      var pid = -1;
+      const data = that.tasks.data;
+      for(var i=0; i<data.length; i++){
+        if(data[i].id==id){
+          console.log("found!");
+          pid = data[i].product_id;
+          break;
+        }
+      }
+      if(pid>-1){
+        Common.reloadFlags[1] = true;
+        Common.reloadFlags[2] = true;
+        that.$router.push({path: "/product", query: {id: pid}});
+      }
       return true;
     });
 
