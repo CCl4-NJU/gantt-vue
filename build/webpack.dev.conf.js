@@ -14,6 +14,7 @@ const portfinder = require('portfinder')
 const express = require('express')
 const app = express()
 var product3Data = require('../static/mock/product-3-2020-10-01.json')
+var product3Data_day = require('../static/mock/product-3-2020-10-17-2020-10-22.json')
 var resourceData = require('../static/mock/resource-2020-10-01.json')
 var resourceData2 = require('../static/mock/resource-2020-10-17.json')
 var orderData = require('../static/mock/order-2020-10-01.json')
@@ -58,6 +59,9 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     before(app) {
       app.get('/product-3-2020-10-01', (req, res) => {
         res.json(product3Data)
+      })
+      app.get('/product-3-2020-10-17-2020-10-22', (req, res) => {
+        res.json(product3Data_day)
       })
       app.get('/resource-2020-10-01', (req, res) => {
         res.json(resourceData)

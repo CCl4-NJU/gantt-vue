@@ -47,7 +47,7 @@
     ></product-gantt>
     <product-gantt-day v-else
       class="left-container"
-      :tasks="tasks"
+      :tasks="tasks_day"
       :start_date="dateRange[0]"
       :end_date="dateRange[1]"
     ></product-gantt-day>
@@ -67,6 +67,11 @@ export default {
     return {
       dataLoaded: false,
       tasks: {},
+      tasks_day: {
+        default () {
+          return {data: [], links: []}
+        }
+      },
       value: 'hour',  //当前展示模式是按小时展示还是按天展示
       timeValue: "",  //如果是按小时展示的话，时间数值，变化时触发timechange函数
       dateRange: "",  //如果是按天展示的话，时间区间，List格式，dateRange[0]~dateRange[1]，变化时触发rangeChange函数
@@ -142,6 +147,15 @@ export default {
             this.dataLoaded = true
           }
         })
+      
+      axios.get('/product-'+this.$route.query.id+'-2020-10-17-2020-10-22')
+      .then(request => {
+        var res = request.data
+        if ( res.ret && res.tasks ){
+          this.tasks_day = res.tasks
+          this.dataLoaded = true
+        }
+      })
     },
     optionChange(){
       //console.log("mode change: "+this.value)
