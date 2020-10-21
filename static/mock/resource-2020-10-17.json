@@ -1,0 +1,185 @@
+{
+  "ret": true,
+  "tasks": {
+    "data": [
+      {
+        "id": 1,
+        "resource": "Line 11",
+        "percent": "60%",
+        "start_date": "2020-10-17 06:00",
+        "duration": 1320,
+        "text": "",
+        "color": "darkturquoise"
+      },
+      {
+        "id": 2,
+        "resource": "Line 42",
+        "percent": "36%",
+        "start_date": "2020-10-17 10:00",
+        "duration": 120,
+        "text": "",
+        "color": "darkturquoise"
+      },
+      {
+        "id": 3,
+        "resource": "李四",
+        "percent": "67%",
+        "start_date": "2020-10-17 07:00",
+        "duration": 1440,
+        "text": "",
+        "color": "darkturquoise"
+      },
+      {
+        "id": 4,
+        "resource": "小明",
+        "percent": "60%",
+        "start_date": "2020-10-17 09:00",
+        "duration": 600,
+        "text": "",
+        "color": "darkturquoise"
+      },
+      {
+        "id": 5,
+        "resource": "张三",
+        "percent": "75%",
+        "start_date": "2020-10-17 19:00",
+        "duration": 240,
+        "text": "",
+        "color": "darkturquoise"
+      },
+      {
+        "id": 6,
+        "resource": "Line 11",
+        "percent": "",
+        "start_date": "2020-10-17 07:00",
+        "duration": 180,
+        "text": "产品1",
+        "color": "green",
+        "product_id": "1",
+        "parent": 1
+      },
+      {
+        "id": 7,
+        "resource": "Line 11",
+        "percent": "",
+        "start_date": "2020-10-17 10:00",
+        "duration": 480,
+        "text": "产品2",
+        "color": "yellow",
+        "product_id": "2",
+        "parent": 1
+      },
+      {
+        "id": 8,
+        "resource": "Line 11",
+        "percent": "",
+        "start_date": "2020-10-17 18:00",
+        "duration": 180,
+        "text": "产品3",
+        "color": "yellowgreen",
+        "product_id": "3",
+        "parent": 1
+      },
+      {
+        "id": 9,
+        "resource": "Line 11",
+        "percent": "",
+        "start_date": "2020-10-17 21:00",
+        "duration": 480,
+        "text": "产品4",
+        "color": "blue",
+        "product_id": "4",
+        "parent": 1
+      },
+      {
+        "id": 10,
+        "resource": "Line 42",
+        "percent": "",
+        "start_date": "2020-10-17 09:00",
+        "duration": 120,
+        "text": "产品3",
+        "color": "yellowgreen",
+        "product_id": "3",
+        "parent": 2
+      },
+      {
+        "id": 11,
+        "resource": "李四",
+        "percent": "",
+        "start_date": "2020-10-17 07:00",
+        "duration": 180,
+        "text": "产品1",
+        "color": "green",
+        "product_id": "1",
+        "parent": 3
+      },
+      {
+        "id": 12,
+        "resource": "李四",
+        "percent": "",
+        "start_date": "2020-10-17 10:00",
+        "duration": 480,
+        "text": "产品2",
+        "color": "yellow",
+        "product_id": "2",
+        "parent": 3
+      },
+      {
+        "id": 13,
+        "resource": "李四",
+        "percent": "",
+        "start_date": "2020-10-18 05:00",
+        "duration": 120,
+        "text": "产品5",
+        "color": "red",
+        "product_id": "5",
+        "parent": 3
+      },
+      {
+        "id": 14,
+        "resource": "小明",
+        "percent": "",
+        "start_date": "2020-10-17 09:00",
+        "duration": 120,
+        "text": "产品3",
+        "color": "yellowgreen",
+        "product_id": "3",
+        "parent": 4
+      },
+      {
+        "id": 15,
+        "resource": "小明",
+        "percent": "",
+        "start_date": "2020-10-17 18:00",
+        "duration": 60,
+        "text": "产品3",
+        "color": "yellowgreen",
+        "product_id": "3",
+        "parent": 4
+      },
+      {
+        "id": 16,
+        "resource": "张三",
+        "percent": "",
+        "start_date": "2020-10-17 19:00",
+        "duration": 120,
+        "text": "产品3",
+        "color": "yellowgreen",
+        "product_id": "3",
+        "parent": 5
+      },
+      {
+        "id": 17,
+        "resource": "小明",
+        "percent": "",
+        "start_date": "2020-10-17 21:00",
+        "duration": 120,
+        "text": "产品4",
+        "color": "blue",
+        "product_id": "4",
+        "parent": 5
+      }
+    ],
+    "links": []
+  }
+}

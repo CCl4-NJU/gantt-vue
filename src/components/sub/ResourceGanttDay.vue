@@ -13,10 +13,13 @@ export default {
       default () {
         return {data: [], links: []}
       }
-    }
+    },
+    start_date: String,
+    end_date: String
   },
  
   mounted: function () {
+    const that = this;
     gantt.config.date_format = "%Y-%m-%d %H:%i";//设置数据中的时间格式，对应start_date格式
     gantt.config.columns = [//设置列
       {name:"resource", label:"资源",    width:"*", align:"center"},
@@ -30,15 +33,18 @@ export default {
     });
     gantt.config.duration_unit = "minute";
     //自定义工具栏
+    
     gantt.templates.tooltip_text = function (start, end, task) {
-        return ''
+        return '<b>产品名称:</b> ' + task.text 
+        + '<br/><b>工作时间:</b> ' + new Date(start).getHours()+':'+new Date(start).getMinutes()
+        +' - '+ new Date(end).getHours()+':'+new Date(end).getMinutes()
     }
     
     //此处和设置时间相关
-    gantt.config.start_date = new Date("2020-10-01 00:00");//时间刻度的开始时间
-    gantt.config.end_date = new Date("2020-10-05 23:59");//时间刻度的结束时间
+    gantt.config.start_date = new Date(this.start_date+" 00:00");//时间刻度的开始时间
+    gantt.config.end_date = new Date(this.end_date+" 23:59");//时间刻度的结束时间
     gantt.config.scales = [
-      {unit: "hour", step: 1, format: "%m-%d %H:%i"} //时间刻度的显示单位
+      {unit: "day", step: 1, format: "%m-%d"} //时间刻度的显示单位
     ];
 
     gantt.config.readonly=true;//只读模式的甘特图

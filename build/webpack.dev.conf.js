@@ -15,6 +15,7 @@ const express = require('express')
 const app = express()
 var product3Data = require('../static/mock/product-3-2020-10-01.json')
 var resourceData = require('../static/mock/resource-2020-10-01.json')
+var resourceData2 = require('../static/mock/resource-2020-10-17.json')
 var orderData = require('../static/mock/order-2020-10-01.json')
 
 var apiRoutes = express.Router()
@@ -60,6 +61,9 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       })
       app.get('/resource-2020-10-01', (req, res) => {
         res.json(resourceData)
+      })
+      app.get('/resource-2020-10-17', (req, res) => {
+        res.json(resourceData2)
       })
       app.get('/order-2020-10-01', (req, res) => {
         res.json(orderData)

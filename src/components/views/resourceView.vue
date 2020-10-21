@@ -42,8 +42,19 @@
         <el-tag type="danger" effect="dark" id="redTag2">红色为延期订单</el-tag>
       </el-col>
     </el-row>
-    <resource-gantt v-if="showHour" class="left-container" :tasks="tasks"></resource-gantt>
-    <resource-gantt-day v-else class="left-container" :tasks="tasks"></resource-gantt-day>
+    <resource-gantt
+      v-if="showHour"
+      class="left-container"
+      :tasks="tasks"
+      :start_date="timeValue"
+    ></resource-gantt>
+    <resource-gantt-day
+      v-else
+      class="left-container"
+      :tasks="tasks"
+      :start_date="dateRange[0]"
+      :end_date="dateRange[1]"
+    ></resource-gantt-day>
   </div>
 </template>
 
@@ -160,17 +171,33 @@ export default {
       // console.log(this.dateRange);
       var ans = this.$parent.sendMessage(this.dateRange, "/backendUrl", "get");
       // console.log("child get Ans: "+ans);
+      console.log("date range change");
       this.showHour = false;
       //todo 根据接收到的数据设置图
     }
   },
   mounted () {
-    this.getResourceInfo()
+    this.getResourceInfo();
+    
     this.timeValue = "2020-10-17";
+    this.dateRange = [
+      "2020-10-17",
+      "2020-10-22"
+    ]
+    
     this.timeChange();
     if (Common.reloadFlags[2]) {
       this.$router.go(0);
       Common.reloadFlags[2] = false;
+    }
+  },
+  watch: {
+    //似乎会先调用watch，然后再调用*Change改变showHour，主要想法就是强制重新渲染
+    dateRange: function(){
+      this.showHour = true;
+    },
+    timeValue: function(){
+      this.showHour = false;
     }
   }
 }
