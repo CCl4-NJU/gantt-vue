@@ -17,7 +17,7 @@ export default {
   },
  
   mounted: function () {
-    gantt.config.date_format = "%Y-%m-%d";//设置数据中的时间格式，对应start_date格式
+    gantt.config.date_format = "%Y-%m-%d %H:%i";//设置数据中的时间格式，对应start_date格式
     gantt.config.columns = [//设置列
       {name:"resource", label:"资源",    width:"*", align:"center"},
       {name:"text",     label:"产品名称", width:"*", tree:true, align:"center" }
@@ -41,10 +41,10 @@ export default {
       //   selector: '.gantt_grid [' + gantt.config.task_attribute + ']',
       //   global: true
       // })
-    gantt.config.start_date = new Date("2020-10-01");//时间刻度的开始时间
-    gantt.config.end_date = new Date("2020-10-05");//时间刻度的结束时间
+    gantt.config.start_date = new Date("2020-10-01 00:00");//时间刻度的开始时间
+    gantt.config.end_date = new Date("2020-10-05 23:59");//时间刻度的结束时间
     gantt.config.scales = [
-      {unit: "day", step: 1, format: "%m-%d"} //时间刻度的显示单位
+      {unit: "hour", step: 1, format: "%m-%d %H:%i"} //时间刻度的显示单位
     ];
     // gantt.attachEvent("onGanttReady", function(){
     // 	var tooltips = gantt.ext.tooltips;
