@@ -33,6 +33,7 @@
             start-placeholder="开始日期"
             end-placeholder="结束日期"
             value-format="yyyy-MM-dd"
+            :clearable="false"
             :picker-options="pickerOptions2"
             @change="rangeChange">
           </el-date-picker>
@@ -45,13 +46,13 @@
     <resource-gantt
       v-if="showHour"
       class="left-container"
-      :tasks="tasks"
+      :resTasks="resTasks"
       :start_date="timeValue"
     ></resource-gantt>
     <resource-gantt-day
-      v-else
+      v-if="showDay"
       class="left-container"
-      :tasks="tasks"
+      :resTasks="resTasks"
       :start_date="dateRange[0]"
       :end_date="dateRange[1]"
     ></resource-gantt-day>
@@ -60,7 +61,6 @@
 
 <script>
 /* eslint-disable */
-import Common from '../../Common.vue'
 import ResourceGantt from '../sub/ResourceGantt.vue';
 import ResourceGanttDay from '../sub/ResourceGanttDay.vue';
 import axios from 'axios'
@@ -70,11 +70,12 @@ export default {
   data () {
     return {
       dataLoaded: false,
-      tasks: {},
+      resTasks: {},
       value: 'hour',  //以下变量含义与productView相同
       timeValue: "",
       dateRange: "",
-      showHour: true,
+      showHour: false,
+      showDay: false,
       options: [{
         value: 'hour',
         label: '按小时显示'
@@ -142,9 +143,10 @@ export default {
         .then(request => {
           var res = request.data
           if ( res.ret && res.tasks ){
-            this.tasks = res.tasks
+            this.resTasks = res.tasks
             this.dataLoaded = true
           }
+          this.reload("hour");
         })
     },
     optionChange(){
@@ -153,53 +155,58 @@ export default {
         case "hour":
           document.getElementById("normalPicker").style.display = "";
           document.getElementById("rangePicker").style.display = "none";
+          this.reload("hour");
           break;
         case "day":
           document.getElementById("normalPicker").style.display = "none";
           document.getElementById("rangePicker").style.display = "block";
+          this.reload("day");
           break;
       }
     },
     timeChange(){
+      if(this.timeValue == null){
+        return;
+      }
       //  console.log(this.timeValue);
        var ans = this.$parent.sendMessage(this.timeValue, "/backendUrl", "get");
       //  console.log("child get Ans: "+ans);
-       this.showHour = true;
        //todo 根据接收到的数据设置图
+       this.reload("hour");
     },
     rangeChange(){
       // console.log(this.dateRange);
       var ans = this.$parent.sendMessage(this.dateRange, "/backendUrl", "get");
       // console.log("child get Ans: "+ans);
-      console.log("date range change");
-      this.showHour = false;
       //todo 根据接收到的数据设置图
+      this.reload("day");
+    },
+    reload(model){
+      switch(model){
+        case "hour":
+          this.showDay = false;
+          this.showHour = false;
+          this.$nextTick(() => (this.showHour = true))
+          break;
+        case "day":
+          this.showHour = false;
+          this.showDay = false;
+          this.$nextTick(() => (this.showDay = true))
+          break;
+      }
     }
   },
   mounted () {
     this.getResourceInfo();
-    
-    this.timeValue = "2020-10-17";
+
+    this.timeValue = "2020-10-1";
     this.dateRange = [
-      "2020-10-17",
-      "2020-10-22"
+      "2020-10-1",
+      "2020-10-3"
     ]
-    
-    this.timeChange();
-    if (Common.reloadFlags[2]) {
-      this.$router.go(0);
-      Common.reloadFlags[2] = false;
-    }
+
+    this.reload("hour");
   },
-  watch: {
-    //似乎会先调用watch，然后再调用*Change改变showHour，主要想法就是强制重新渲染
-    dateRange: function(){
-      this.showHour = true;
-    },
-    timeValue: function(){
-      this.showHour = false;
-    }
-  }
 }
 </script>
 

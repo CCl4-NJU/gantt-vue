@@ -18,7 +18,6 @@
 
 <script>
 /* eslint-disable */
-import Common from './Common.vue'
 import axios from 'axios'
 export default {
   name: 'app',
@@ -26,8 +25,6 @@ export default {
   data () {
     return {
       activeIndex: "1",
-      dataLoaded: false,
-      tasks: {}
     }
   },
   methods: {
@@ -55,22 +52,17 @@ export default {
     },
     initActiveIndex(){
       var url = window.location.hash;
-      switch(url){
-        case "#/order":
-          this.activeIndex = "1";
-          break;
-        // case "#/product":
-        //   this.activeIndex = "2";
-        //   break;
-        case "#/resource":
-          this.activeIndex = "3";
-          break;
-        case "#/HelloWorld":
-          this.activeIndex = "4";
-          break;
-        //这边不知道怎么匹配"#/product?{id}"的情况，先用default
-        default:
-          this.activeIndex = "2";
+      if(url.indexOf("#/order") != -1){
+        this.activeIndex = "1";
+      }
+      else if(url.indexOf("#/product") != -1){
+        this.activeIndex = "2";
+      }
+      else if(url.indexOf("#/resource") != -1){
+        this.activeIndex = "3";
+      }
+      else if(url.indexOf("#/HelloWorld") != -1){
+        this.activeIndex = "4";
       }
     },
     sendMessage(data, url, method){ //发送信息模板函数，可能需要增加一个请求标志位以防止并发错误
@@ -106,12 +98,6 @@ export default {
     // this.getProductInfo();
     this.initActiveIndex();
   },
-  watch: {
-    activeIndex (newIndex, oldIndex) {
-      Common.reloadFlags[newIndex-1] = true;
-      Common.reloadFlags[oldIndex-1] = false;
-    }
-  }
 }
 </script>
 
@@ -122,21 +108,21 @@ export default {
     padding: 0;
   }
   #appContainer{
-   position: fixed;
+   position: absolute;
     height: 100%;
     width: 100%;
-    overflow: scroll;
   }
   .container {
     position: absolute;
-    top: 3.8125rem;
+    top: 3.75rem;
     bottom: 0rem;
     width: 100%;
   }
  .left-container {
-    overflow: hidden;
-    position: relative;
-    height: 100%;
+    position: absolute;
+    top: 3.75rem;
+    bottom: 0rem;
+    width: 100%;
   }
   #img{
     padding-left: 2rem;

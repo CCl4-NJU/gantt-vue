@@ -24,13 +24,16 @@
       </el-col>
       <el-col :span="6"><el-tag type="danger" effect="dark" id="redTag">红色为延期订单</el-tag></el-col>
     </el-row>
-    <order-gantt class="left-container" :tasks="tasks"></order-gantt>
+    <order-gantt
+      v-if="showOrder"
+      class="Ocontainer"
+      :orderTasks="orderTasks"
+      ></order-gantt>
   </div>
 </template>
 
 <script>
 /* eslint-disable */
-import Common from '../../Common.vue'
 import OrderGantt from '../sub/OrderGantt.vue'
 import axios from 'axios'
 export default {
@@ -39,10 +42,11 @@ export default {
   data () {
     return {
       dataLoaded: false,
-      tasks: {},
+      orderTasks: {},
       timeValue: '',  //当前选择时间，变化时触发timechange函数
       ddl: '2017年10月1日' , //中间按期交货率的截至日期说明
       percentage: 70, //按期交货率
+      showOrder: false,
       status: 'warning',  //按期交货率颜色，根据百分比自动变化，在setProgress函数中自动设置
                           // <60为红色，60~80为橙色，80~100为绿色
       pickerOptions: {  //快捷时间选择的设置
@@ -78,15 +82,21 @@ export default {
         .then(request => {
           var res = request.data
           if ( res.ret && res.tasks ){
-            this.tasks = res.tasks
+            this.orderTasks = res.tasks
             this.dataLoaded = true
           }
+          this.showOrder = true;
         })
     },
     timeChange(){
+      if(this.timeValue == null){
+        return;
+      }
       var ans = this.$parent.sendMessage(this.timeValue, "/backendUrl", "get");
       // console.log("child get Ans: "+ans);
       //todo 根据接收到的数据设置图和按期交货率
+      this.showOrder = false;
+      this.$nextTick(() => (this.showOrder = true))
     },
     setProgress(per){
       this.percentage = per;
@@ -108,11 +118,6 @@ export default {
     this.getOrderInfo();
     this.setProgress(92);
     this.timeValue = "2020-10-17";
-    this.timeChange();
-    if (Common.reloadFlags[0]) {
-      this.$router.go(0);
-      Common.reloadFlags[0] = false;
-    }
   }
 }
 </script>
@@ -123,6 +128,12 @@ export default {
   }
   .el-col{
     height: 100%;
+  }
+  .Ocontainer{
+    position: absolute;
+    top: 6rem;
+    bottom: 0rem;
+    width: 100%;
   }
   #datePicker{
     top: 0.625rem;

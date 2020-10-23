@@ -33,6 +33,7 @@
             start-placeholder="开始日期"
             end-placeholder="结束日期"
             value-format="yyyy-MM-dd"
+            :clearable="false"
             :picker-options="pickerOptions2"
             @change="rangeChange">
           </el-date-picker>
@@ -42,12 +43,12 @@
     </el-row>
     <product-gantt v-if="showHour"
       class="left-container"
-      :tasks="tasks"
+      :pdtTasks="pdtTasks"
       :start_date="timeValue"
     ></product-gantt>
-    <product-gantt-day v-else
+   <product-gantt-day v-if="showDay"
       class="left-container"
-      :tasks="tasks_day"
+      :pdtTasks_day="pdtTasks_day"
       :start_date="dateRange[0]"
       :end_date="dateRange[1]"
     ></product-gantt-day>
@@ -56,7 +57,6 @@
 
 <script>
 /* eslint-disable */
-import Common from '../../Common.vue'
 import ProductGantt from '../sub/ProductGantt.vue';
 import ProductGanttDay from '../sub/ProductGanttDay.vue';
 import axios from 'axios'
@@ -66,8 +66,8 @@ export default {
   data () {
     return {
       dataLoaded: false,
-      tasks: {},
-      tasks_day: {
+      pdtTasks: {},
+      pdtTasks_day: {
         default () {
           return {data: [], links: []}
         }
@@ -75,7 +75,8 @@ export default {
       value: 'hour',  //当前展示模式是按小时展示还是按天展示
       timeValue: "",  //如果是按小时展示的话，时间数值，变化时触发timechange函数
       dateRange: "",  //如果是按天展示的话，时间区间，List格式，dateRange[0]~dateRange[1]，变化时触发rangeChange函数
-      showHour: true,
+      showHour: false,
+      showDay: false,
       options: [{ //模式选项
         value: 'hour',
         label: '按小时显示'
@@ -143,16 +144,17 @@ export default {
         .then(request => {
           var res = request.data
           if ( res.ret && res.tasks ){
-            this.tasks = res.tasks
+            this.pdtTasks = res.tasks
             this.dataLoaded = true
           }
+          this.reload("hour")
         })
-      
+
       axios.get('/product-'+this.$route.query.id+'-2020-10-17-2020-10-22')
       .then(request => {
         var res = request.data
         if ( res.ret && res.tasks ){
-          this.tasks_day = res.tasks
+          this.pdtTasks_day = res.tasks
           this.dataLoaded = true
         }
       })
@@ -163,51 +165,58 @@ export default {
         case "hour":
           document.getElementById("normalPicker").style.display = "";
           document.getElementById("rangePicker").style.display = "none";
+          this.reload("hour");
           break;
         case "day":
           document.getElementById("normalPicker").style.display = "none";
           document.getElementById("rangePicker").style.display = "block";
+          this.reload("day");
           break;
       }
     },
     timeChange(){
-       //console.log(this.timeValue);
+       if(this.timeValue == null){
+         return;
+       }
        var ans = this.$parent.sendMessage(this.timeValue, "/backendUrl", "get");
        //console.log("child get Ans: "+ans);
-       this.showHour = true;
        //todo 根据接收到的数据设置图
+       this.reload("hour");
     },
     rangeChange(){
       // console.log(this.dateRange);
       var ans = this.$parent.sendMessage(this.dateRange, "/backendUrl", "get");
       // console.log("child get Ans: "+ans);
-      this.showHour = false;
       //todo 根据接收到的数据设置图
+      this.reload("day");
+    },
+    reload(model){
+      switch(model){
+        case "hour":
+          this.showDay = false;
+          this.showHour = false;
+          this.$nextTick(() => (this.showHour = true))
+          break;
+        case "day":
+          this.showHour = false;
+          this.showDay = false;
+          this.$nextTick(() => (this.showDay = true))
+          break;
+      }
     }
   },
   mounted () {
     this.getProductInfo();
-    
-    this.timeValue = "2020-10-17";
+
+    this.pdtTasks = {};
+    this.pdtTasks_day = {data: [], links: []};
+    this.timeValue = "2020-10-1";
     this.dateRange = [
       "2020-10-17",
       "2020-10-22"
     ]
 
-    this.timeChange();
-    if (Common.reloadFlags[1]) {
-      this.$router.go(0);
-      Common.reloadFlags[1] = false;
-    }
   },
-  watch: {
-    dateRange: function(){
-      this.showHour = true;
-    },
-    timeValue: function(){
-      this.showHour = false;
-    }
-  }
 }
 </script>
 

@@ -8,16 +8,18 @@ import {gantt} from 'dhtmlx-gantt';
 export default {
   name: 'OrderGantt',
   props: {
-    tasks: {
+    orderTasks: {
       type: Object,
       default () {
         return {data: [], links: []}
       }
     }
   },
- 
+  created () {
+    gantt.clearAll() // 先清空，再添加，就不会有缓存
+  },
   mounted: function () {
-    gantt.config.date_format = "%Y-%m-%d";//设置数据中的时间格式，对应start_date格式
+    gantt.config.date_format = "%Y-%m-%d %H:%i";//设置数据中的时间格式，对应start_date格式
     gantt.config.columns = [//设置列
       {name:"number", label:"订单号",    width:"*", align:"center"},
       {name:"text",   label:"工艺名称", width:"*", tree:true, align:"center" }
@@ -46,18 +48,18 @@ export default {
     gantt.config.scales = [
       {unit: "day", step: 1, format: "%Y-%m-%d"} //时间刻度的显示单位
     ];
-    
+
     // gantt.attachEvent("onGanttReady", function(){
     // 	var tooltips = gantt.ext.tooltips;
     // 	tooltips.tooltip.setViewport(gantt.$task_data);
     // });
-    
+
     // gantt.config.multiselect = false
     // gantt.config.multiselect_one_level = true; //在一个或任何级别内是否可以使用多任务选择
     gantt.config.readonly=true;//只读模式的甘特图
- 
+
     gantt.init(this.$refs.ogantt);
-    gantt.parse(this.$props.tasks);
+    gantt.parse(this.$props.orderTasks);
   },
 
   computed: {
@@ -67,7 +69,7 @@ export default {
   }
 }
 </script>
- 
+
 <style>
     @import "dhtmlx-gantt/codebase/dhtmlxgantt.css";
 </style>

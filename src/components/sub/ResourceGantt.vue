@@ -5,11 +5,10 @@
 <script>
 /* eslint-disable */
 import {gantt} from 'dhtmlx-gantt';
-import Common from '../../Common.vue';
 export default {
   name: 'ResourceGantt',
   props: {
-    tasks: {
+    resTasks: {
       type: Object,
       default () {
         return {data: [], links: []}
@@ -17,7 +16,9 @@ export default {
     },
     start_date: String
   },
- 
+  created () {
+    gantt.clearAll() // 先清空，再添加，就不会有缓存
+  },
   mounted: function () {
     const that = this;
 
@@ -37,7 +38,7 @@ export default {
     gantt.templates.tooltip_text = function (start, end, task) {
         return ''
     }
-    
+
     //此处和设置时间相关
     gantt.config.start_date = new Date(this.start_date+" 00:00");//时间刻度的开始时间
     gantt.config.end_date = new Date(this.start_date+" 23:59");//时间刻度的结束时间
@@ -46,7 +47,7 @@ export default {
     ];
 
     gantt.config.readonly=true;//只读模式的甘特图
- 
+
     gantt.attachEvent("onTaskClick", function(id, e){
       var pid = -1;
       const data = that.tasks.data;
@@ -58,19 +59,17 @@ export default {
         }
       }
       if(pid>-1){
-        Common.reloadFlags[1] = true;
-        Common.reloadFlags[2] = true;
         that.$router.push({path: "/product", query: {id: pid}});
       }
       return true;
     });
 
     gantt.init(this.$refs.resgantt);
-    gantt.parse(this.$props.tasks);
+    gantt.parse(this.$props.resTasks);
   }
 }
 </script>
- 
+
 <style>
     @import "dhtmlx-gantt/codebase/dhtmlxgantt.css";
 </style>
