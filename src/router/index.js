@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '../components/sub/HelloWorld.vue'
+import table from '../components/views/Table.vue'
 import order from '../components/views/orderView.vue'
 import product from '../components/views/productView.vue'
 import resource from '../components/views/resourceView.vue'
@@ -16,9 +16,9 @@ export default new Router({
       redirect: '/order'
     },
     {
-      path: '/HelloWorld',
-      name: 'HelloWorld',
-      component: HelloWorld
+      path: '/table',
+      name: 'table',
+      component: table
     },
     {
       path: '/order',

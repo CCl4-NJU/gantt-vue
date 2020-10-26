@@ -46,7 +46,7 @@ export default {
           this.$router.push("/resource");
           break;
         case "4":
-          this.$router.push("/HelloWorld");
+          this.$router.push("/table");
           break;
       }
     },
@@ -61,7 +61,7 @@ export default {
       else if(url.indexOf("#/resource") != -1){
         this.activeIndex = "3";
       }
-      else if(url.indexOf("#/HelloWorld") != -1){
+      else if(url.indexOf("#/table") != -1){
         this.activeIndex = "4";
       }
     },
