@@ -24,15 +24,60 @@
         </div>
       </el-col>
     </el-row>
+    <el-row id="loadPicker">
+      <el-col :span="5" style="padding-top: 0.625rem; text-align: right;">
+        <el-select v-model="value" placeholder="请选择" @change="optionChange()">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+      </el-col>
+      <el-col :span="6" style="padding-top: 0.625rem; text-align: left;">
+        <div id="rangePicker">
+          <el-date-picker
+            v-model="dateRange"
+            type="daterange"
+            align="right"
+            unlink-panels
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            value-format="yyyy-MM-dd"
+            :clearable="false"
+            :picker-options="pickerOptions"
+            @change="rangeChange">
+          </el-date-picker>
+        </div>
+        <div id="monthPicker">
+          <el-date-picker
+            v-model="monthRange"
+            type="monthrange"
+            align="right"
+            unlink-panels
+            range-separator="至"
+            start-placeholder="开始月份"
+            end-placeholder="结束月份"
+            :clearable="false"
+            @change="monthChange"
+            value-format="yyyy-MM-dd"
+            :picker-options="pickerOptions2">
+          </el-date-picker>
+        </div>
+      </el-col>
+      <el-col :span="13"></el-col>
+    </el-row>
     <el-table
       :data="tableData"
-      id="table"
-      :lazy="false">
+      id="table">
       <el-table-column
         fixed
         prop="date"
         label="日期"
-        width="150">
+        width="150"
+        align="center">
       </el-table-column>
       <template v-for="(item, index) in resourceList">
         <el-table-column
@@ -58,55 +103,115 @@ export default {
   name: 'Table',
   data (){
     return {
-    start_date: '2020年10月1日',
-    end_date: '2020年10月7日',
-    device_percent: 85,
-    human_percent: 63,
-    loading: true,
-    tableData: [{
-      date: '2020-10-01',
-      progress: [23, 78, 23, 76, 23, 76]
-    }, {
-      date: '2020-10-02',
-      progress: [50, 113, 50, 99, 50, 99]
-    }, {
-      date: '2020-10-03',
-      progress: [68, 23, 58, 50, 58, 50]
-    }, {
-      date: '2020-10-04',
-      progress: [99, 58, 50, 99, 50, 99]
-    }, {
-      date: '2020-10-05',
-      progress: [23, 78, 23, 76, 23, 76]
-    }, {
-      date: '2020-10-06',
-      progress: [50, 113, 50, 99, 50, 99]
-    }, {
-      date: '2020-10-07',
-      progress: [68, 23, 58, 50, 58, 50]
-    }, ],
+      start_date: '2020年10月1日',
+      end_date: '2020年10月7日',
+      device_percent: 85,
+      human_percent: 63,
+      loading: true,
+      dateRange: '',
+      monthRange: '',
+      value: 'day',
+      options: [{ //模式选项
+        value: 'day',
+        label: '按天显示'
+      }, {
+        value: 'week',
+        label: '按周显示'
+      }],
+      tableData: [{
+        date: '2020-10-01',
+        progress: [23, 78, 23, 76, 23, 76]
+      }, {
+        date: '2020-10-02',
+        progress: [50, 113, 50, 99, 50, 99]
+      }, {
+        date: '2020-10-03',
+        progress: [68, 23, 58, 50, 58, 50]
+      }, {
+        date: '2020-10-04',
+        progress: [99, 58, 50, 99, 50, 99]
+      }, {
+        date: '2020-10-05',
+        progress: [23, 78, 23, 76, 23, 76]
+      }, {
+        date: '2020-10-06',
+        progress: [50, 113, 50, 99, 50, 99]
+      }, {
+        date: '2020-10-07',
+        progress: [68, 23, 58, 50, 58, 50]
+      }, ],
 
-    resourceList: [{
-      name: 'Line 1'
-    }, {
-      name: 'Line 2'
-    }, {
-      name: '张三'
-    }, {
-      name: '李四'
-    }, {
-      name: '张扬'
-    }, {
-      name: '李彤'
-    }],
-    colorList: [
-      'aqua',
-      'deepskyblue',
-      'lime',
-      'gold',
-      'violet',
-      'red'
-    ]
+      resourceList: [{
+        name: 'Line 1'
+      }, {
+        name: 'Line 2'
+      }, {
+        name: '张三'
+      }, {
+        name: '李四'
+      }, {
+        name: '张扬'
+      }, {
+        name: '李彤'
+      }],
+      colorList: [
+        'aqua',
+        'deepskyblue',
+        'lime',
+        'gold',
+        'violet',
+        'red'
+      ],
+      pickerOptions: {
+        shortcuts: [{
+          text: '最近一周',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: '最近一个月',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: '最近三个月',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+            picker.$emit('pick', [start, end]);
+          }
+        }]
+      },
+      pickerOptions2: {
+        shortcuts: [{
+          text: '本月',
+          onClick(picker) {
+            picker.$emit('pick', [new Date(), new Date()]);
+          }
+        }, {
+          text: '今年至今',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date(new Date().getFullYear(), 0);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: '最近六个月',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setMonth(start.getMonth() - 6);
+            picker.$emit('pick', [start, end]);
+          }
+        }]
+      },
     }
   },
   computed: {
@@ -118,6 +223,33 @@ export default {
       }
     }
   },
+  methods:{
+    rangeChange(){
+      console.log(this.dateRange);
+      var ans = this.$parent.sendMessage(this.dateRange, "/backendUrl", "get");
+      // console.log("child get Ans: "+ans);
+      //todo 根据接收到的数据设置图
+    },
+    monthChange(){
+      console.log(this.monthRange);
+      var ans = this.$parent.sendMessage(this.monthRange, "/backendUrl", "get");
+      // console.log("child get Ans: "+ans);
+      //todo 根据接收到的数据设置图
+    },
+    optionChange(){
+      //console.log("mode change: "+this.value)
+      switch(this.value){
+        case "day":
+          document.getElementById("rangePicker").style.display = "";
+          document.getElementById("monthPicker").style.display = "none";
+          break;
+        case "week":
+          document.getElementById("rangePicker").style.display = "none";
+          document.getElementById("monthPicker").style.display = "block";
+          break;
+      }
+    },
+  }
 }
 </script>
 
@@ -131,16 +263,20 @@ export default {
     height: 50px !important;
   }
   #loadHeadRow{
-     height: 6rem;
+     height: 8rem;
+     border-top: #E9E9EB solid 0.0625rem;
+     border-bottom: #E9E9EB solid 0.0625rem;
   }
-  #table{
-    position: absolute;
-    top: 6rem;
-    bottom: 0;
-    width: 100%;
-    overflow: scroll;
+  #monthPicker{
+    display: none;
+  }
+  #loadPicker{
+    height: 4rem;
+    border-bottom: #E9E9EB solid 0.0625rem;
   }
   .barCol{
+    padding-top: 0.9rem;
+    padding-bottom: 0.6rem;
     border-left: #E9E9EB solid 0.0625rem;
     border-right: #E9E9EB solid 0.0625rem;
     padding-left: 5rem;
