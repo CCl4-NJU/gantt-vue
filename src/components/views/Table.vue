@@ -4,7 +4,7 @@
       <el-col :span="12" class="barCol" style="">
         <div class="progress-wrapper">
           <p>设备总负载</p>
-          <p class="smallFont">{{start_date}}-{{end_date}}</p>
+          <p class="smallFont">{{start_date}}至{{end_date}}</p>
           <el-progress
             :text-inside="true"
             :stroke-width="26"
@@ -16,7 +16,7 @@
       <el-col :span="12" class="barCol" style="">
         <div class="progress-wrapper">
           <p>人员总负载</p>
-          <p class="smallFont">{{start_date}}-{{end_date}}</p>
+          <p class="smallFont">{{start_date}}至{{end_date}}</p>
           <el-progress
             :text-inside="true"
             :stroke-width="26"
@@ -106,8 +106,8 @@ export default {
   name: 'Table',
   data (){
     return {
-      start_date: '2020年10月1日',
-      end_date: '2020年10月7日',
+      start_date: '2020-10-01',
+      end_date: '2020-10-07',
       device_percent: 0,
       human_percent: 0,
       loading: true,
@@ -195,7 +195,13 @@ export default {
   methods:{
     rangeChange(){
       console.log(this.dateRange);
-      var ans = this.$parent.sendMessage(this.dateRange, "/backendUrl", "get");
+      //var ans = this.$parent.sendMessage(this.dateRange, "/backendUrl", "get");
+      
+      this.start_date = this.dateRange[0];
+      this.end_date = this.dateRange[1];
+      console.log(this.start_date+"---"+this.end_date);
+      this.getPercentInfoByDay(this.start_date);
+
       // console.log("child get Ans: "+ans);
       //todo 根据接收到的数据设置图
     },
@@ -218,8 +224,8 @@ export default {
           break;
       }
     },
-    getPercentInfo(){
-      axios.get('/percent-2020-10-01')
+    getPercentInfoByDay(start_date){
+      axios.get('/percent-'+start_date)
         .then(request => {
           var res = request.data
           if ( res.ret ){
@@ -232,7 +238,7 @@ export default {
     }
   },
   mounted () {
-    this.getPercentInfo();
+    this.getPercentInfoByDay(this.start_date);
   }
 }
 </script>
