@@ -18,6 +18,7 @@ var product3Data_day = require('../static/mock/product-3-2020-10-17-2020-10-22.j
 var resourceData = require('../static/mock/resource-2020-10-01.json')
 var resourceData2 = require('../static/mock/resource-2020-10-17.json')
 var orderData = require('../static/mock/order-2020-10-01.json')
+var percentData = require('../static/mock/percent-2020-10-01.json')
 
 var apiRoutes = express.Router()
 app.use(apiRoutes)
@@ -71,6 +72,9 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       })
       app.get('/order-2020-10-01', (req, res) => {
         res.json(orderData)
+      })
+      app.get('/percent-2020-10-01', (req, res) => {
+        res.json(percentData)
       })
     }
   },

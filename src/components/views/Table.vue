@@ -5,7 +5,8 @@
         <div class="progress-wrapper">
           <p>设备总负载</p>
           <p class="smallFont">{{start_date}}-{{end_date}}</p>
-          <el-progress :text-inside="true"
+          <el-progress
+            :text-inside="true"
             :stroke-width="26"
             :percentage="device_percent"
             :color="getColor(device_percent)">
@@ -16,7 +17,8 @@
         <div class="progress-wrapper">
           <p>人员总负载</p>
           <p class="smallFont">{{start_date}}-{{end_date}}</p>
-          <el-progress :text-inside="true"
+          <el-progress
+            :text-inside="true"
             :stroke-width="26"
             :percentage="human_percent"
             :color="getColor(human_percent)">
@@ -99,14 +101,15 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'Table',
   data (){
     return {
       start_date: '2020年10月1日',
       end_date: '2020年10月7日',
-      device_percent: 85,
-      human_percent: 63,
+      device_percent: 0,
+      human_percent: 0,
       loading: true,
       dateRange: '',
       monthRange: '',
@@ -118,42 +121,8 @@ export default {
         value: 'week',
         label: '按周显示'
       }],
-      tableData: [{
-        date: '2020-10-01',
-        progress: [23, 78, 23, 76, 23, 76]
-      }, {
-        date: '2020-10-02',
-        progress: [50, 113, 50, 99, 50, 99]
-      }, {
-        date: '2020-10-03',
-        progress: [68, 23, 58, 50, 58, 50]
-      }, {
-        date: '2020-10-04',
-        progress: [99, 58, 50, 99, 50, 99]
-      }, {
-        date: '2020-10-05',
-        progress: [23, 78, 23, 76, 23, 76]
-      }, {
-        date: '2020-10-06',
-        progress: [50, 113, 50, 99, 50, 99]
-      }, {
-        date: '2020-10-07',
-        progress: [68, 23, 58, 50, 58, 50]
-      }, ],
-
-      resourceList: [{
-        name: 'Line 1'
-      }, {
-        name: 'Line 2'
-      }, {
-        name: '张三'
-      }, {
-        name: '李四'
-      }, {
-        name: '张扬'
-      }, {
-        name: '李彤'
-      }],
+      tableData: [],
+      resourceList: [],
       colorList: [
         'aqua',
         'deepskyblue',
@@ -249,6 +218,21 @@ export default {
           break;
       }
     },
+    getPercentInfo(){
+      axios.get('/percent-2020-10-01')
+        .then(request => {
+          var res = request.data
+          if ( res.ret ){
+            this.device_percent = res.device_percent
+            this.human_percent = res.human_percent
+            this.resourceList = res.resourceList
+            this.tableData = res.tableData
+          }
+        })
+    }
+  },
+  mounted () {
+    this.getPercentInfo();
   }
 }
 </script>
