@@ -119,7 +119,7 @@ export default {
         label: '按天显示'
       }, {
         value: 'week',
-        label: '按周显示'
+        label: '按月显示'
       }],
       tableData: [],
       resourceList: [],
@@ -199,7 +199,7 @@ export default {
       
       this.start_date = this.dateRange[0];
       this.end_date = this.dateRange[1];
-      console.log(this.start_date+"---"+this.end_date);
+      
       this.getPercentInfoByDay(this.start_date);
 
       // console.log("child get Ans: "+ans);
