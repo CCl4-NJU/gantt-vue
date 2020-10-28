@@ -28,7 +28,8 @@
       v-if="showOrder"
       class="Ocontainer"
       :orderTasks="orderTasks"
-      ></order-gantt>
+      :currentDate="timeValue"
+    ></order-gantt>
   </div>
 </template>
 
