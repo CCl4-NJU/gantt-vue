@@ -208,6 +208,12 @@ export default {
     monthChange(){
       console.log(this.monthRange);
       var ans = this.$parent.sendMessage(this.monthRange, "/backendUrl", "get");
+
+      this.start_date = this.monthRange[0];
+      this.end_date = this.monthRange[1];
+      
+      this.getPercentInfoByWeek(this.start_date);
+
       // console.log("child get Ans: "+ans);
       //todo 根据接收到的数据设置图
     },
@@ -226,6 +232,19 @@ export default {
     },
     getPercentInfoByDay(start_date){
       axios.get('/percent-'+start_date)
+        .then(request => {
+          var res = request.data
+          if ( res.ret ){
+            this.device_percent = res.device_percent
+            this.human_percent = res.human_percent
+            this.resourceList = res.resourceList
+            this.tableData = res.tableData
+          }
+        })
+    },
+    getPercentInfoByWeek(start_date){
+      var start_month = start_date.substring(0,7);
+      axios.get('/percent-'+start_month)
         .then(request => {
           var res = request.data
           if ( res.ret ){
