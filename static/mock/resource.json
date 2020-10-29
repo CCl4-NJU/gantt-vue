@@ -1,0 +1,25 @@
+{
+  "ret": true,
+  "human": [{
+      "id": 3,
+      "date": "2020-10-01",
+      "name": "童小玲组",
+      "number": 5
+    }, {
+      "id": 4,
+      "date": "2020-10-02",
+      "name": "王小虎组",
+      "number": 4
+  }],
+  "device": [{
+      "id": 5,
+      "date": "2020-09-30",
+      "name": "Line 1",
+      "number": 2
+    }, {
+      "id": 6,
+      "date": "2020-09-30",
+      "name": "Line 4",
+      "number": 4
+  }]
+}

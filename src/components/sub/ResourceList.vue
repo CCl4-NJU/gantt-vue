@@ -151,6 +151,7 @@
 </div>
 </template>
 <script>
+import axios from 'axios';
 var _index;
   export default {
     name: 'ResourceList',
@@ -172,33 +173,13 @@ var _index;
           date: '',
           name: '人力资源',
           number: '',
-          children: [{
-              id: 3,
-              date: '2020-10-01',
-              name: '童小玲组',
-              number: '5'
-            }, {
-              id: 4,
-              date: '2020-10-02',
-              name: '王小虎组',
-              number: '4'
-          }]
+          children: []
         }, {
           id: 2,
           date: '',
           name: '硬件资源',
           number: '',
-          children: [{
-              id: 5,
-              date: '2020-09-30',
-              name: 'Line 1',
-              number: '2'
-            }, {
-              id: 6,
-              date: '2020-09-30',
-              name: 'Line 4',
-              number: '4'
-          }]
+          children: []
         }]
       }
     },
@@ -216,10 +197,11 @@ var _index;
         
         _index = index;
         this.editForm = Object.assign({}, row);
-        if(_index>this.tableData[0].children.length+1){
-          this.radio = 2;
-        } else{
+        
+        if(row.hr){
           this.radio = 1;
+        } else{
+          this.radio = 2;
         }
         // console.log(index)
         // console.log(_index)
@@ -239,10 +221,10 @@ var _index;
       },
       handleDelete(index, row) {
         _index = index;
-        if(_index>this.tableData[0].children.length+1){
-          this.radio = 2;
-        } else{
+        if(row.hr){
           this.radio = 1;
+        } else{
+          this.radio = 2;
         }
         
         this.$confirm('此操作将永久删除该资源, 是否继续?', '提示', {
@@ -251,8 +233,7 @@ var _index;
           type: 'warning'
         }).then(() => {
           //todo,根据后端返回结果确认是否删除成功
-          var childrenIndex = this.radio==1 ? 
-            this.getChildrenIndex(_index, true) :this.getChildrenIndex(_index, false);
+          var childrenIndex = this.getChildrenIndex(_index, row.hr)
           
           this.tableData[this.radio-1].children.splice(childrenIndex, 1)
           //storage.set('tableform', this.tableform)
@@ -307,13 +288,37 @@ var _index;
           return index - humanNum - 2;
         }
       },
+      getResourceInfo(){
+        axios.get('/resourceInfo')
+        .then(request => {
+          var res = request.data
+          if ( res.ret ){
+            var human_list = res.human;
+            for(var i=0; i<human_list.length; i++){
+              var human_item = human_list[i];
+              human_item.hr = true;
+              this.tableData[0].children.push(human_item);
+            }
+
+            var device_list = res.device;
+            for(var i=0; i<device_list.length; i++){
+              var device_item = device_list[i];
+              device_item.hr = false;
+              this.tableData[1].children.push(device_item);
+            }
+          }
+        })
+      },
       mockId(){
         var total = this.tableData.length;
         total += (this.tableData[0].children.length);
         total += (this.tableData[1].children.length);
 
-        return total + 1;
+        return (Date.now()).toString();
       }
+    },
+    mounted(){
+      this.getResourceInfo();
     }
   }
 </script>
