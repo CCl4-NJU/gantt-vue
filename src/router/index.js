@@ -4,6 +4,8 @@ import table from '../components/views/Table.vue'
 import order from '../components/views/orderView.vue'
 import product from '../components/views/productView.vue'
 import resource from '../components/views/resourceView.vue'
+import resControll from '../components/views/res_ControllView.vue'
+import mainView from '../components/views/mainView.vue'
 
 Vue.use(Router)
 
@@ -12,8 +14,8 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: order,
-      redirect: '/order'
+      component: mainView,
+      // redirect: '/order'
     },
     {
       path: '/table',
@@ -34,6 +36,11 @@ export default new Router({
       path: '/resource',
       name: 'resource',
       component: resource
+    },
+    {
+      path: '/resControll',
+      name: 'resControll',
+      component: resControll
     }
   ]
 })

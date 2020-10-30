@@ -21,7 +21,7 @@ var orderData = require('../static/mock/order-2020-10-01.json')
 var percentData = require('../static/mock/percent-2020-10-01.json')
 var percentData2 = require('../static/mock/percent-2020-10-17.json')
 var percentData3 = require('../static/mock/percent-2020-09.json')
-var resourceInfo = require('../static/resource.json')
+var resourceInfo = require('../static/mock/resource.json')
 
 var apiRoutes = express.Router()
 app.use(apiRoutes)
