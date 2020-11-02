@@ -11,16 +11,22 @@
       <el-table-column
         prop="date"
         label="加入日期"
-        width="360">
+        width="300">
       </el-table-column>
       <el-table-column
         prop="name"
         label="资源名称"
-        width="360">
+        width="300">
       </el-table-column>
       <el-table-column
         prop="number"
-        label="资源数量">
+        label="资源数量"
+        width="300">
+      </el-table-column>
+      <el-table-column
+        prop="shift"
+        label="班次"
+        width="300">
       </el-table-column>
       <el-table-column
         width="200"
@@ -84,6 +90,27 @@
           autocomplete="off"
         ></el-input>
       </el-form-item>
+      <el-form-item
+          label="班组信息"
+          :label-width="formLabelWidth"
+        >
+        <template>
+            <el-radio
+              v-model="shiftRadio"
+              :label="1"
+            >全天</el-radio>
+            <el-radio
+              v-model="shiftRadio"
+              :label="2"
+              :disabled="this.radio==2"
+            >早班</el-radio>
+            <el-radio
+              v-model="shiftRadio"
+              :label="3"
+              :disabled="this.radio==2"
+            >晚班</el-radio>
+          </template>
+      </el-form-item>
     </el-form>
     <div>
       <el-button @click="cancel()">取消</el-button>
@@ -138,6 +165,27 @@
           autocomplete="off"
         ></el-input>
       </el-form-item>
+      <el-form-item
+          label="班组信息"
+          :label-width="formLabelWidth"
+        >
+        <template>
+            <el-radio
+              v-model="shiftRadio"
+              :label="1"
+            >全天</el-radio>
+            <el-radio
+              v-model="shiftRadio"
+              :label="2"
+              :disabled="this.radio==2"
+            >早班</el-radio>
+            <el-radio
+              v-model="shiftRadio"
+              :label="3"
+              :disabled="this.radio==2"
+            >晚班</el-radio>
+          </template>
+      </el-form-item>
     </el-form>
     <div>
       <el-button @click="cancel()">取消</el-button>
@@ -157,7 +205,7 @@ var _index;
     name: 'ResourceList',
     data() {
       return {
-        formLabelWidth: '360px',
+        formLabelWidth: '300px',
 
         addFormVisible: false,//是否显示新增窗口
         addLoading: false,
@@ -167,6 +215,9 @@ var _index;
         editForm: [],
 
         radio: 1,//随点击位置而变，根据radio可以获取到人力资源或硬件资源的children数据
+        
+        shiftRadio: 1,
+        shiftInfo: ['全天','早班','晚班'],
 
         tableData: [{
           id: 1,
@@ -187,10 +238,11 @@ var _index;
       handleAdd() {
         this.addFormVisible = true;
         this.radio = 1;
+        this.shiftRadio = 1;
         this.addForm = {
           name: '',
           number: ''
-        }
+        };
       },
       handleEdit(index, row) {
         this.editFormVisible = true;
@@ -203,9 +255,39 @@ var _index;
         } else{
           this.radio = 2;
         }
+
+        if(row.shift=='全天'){
+          this.shiftRadio = 1;
+        } else if(row.shift=='早班'){
+          this.shiftRadio = 2;
+        } else{
+          this.shiftRadio = 3;
+        }
         // console.log(index)
         // console.log(_index)
         //取到这一栏的值，也就是明白是在那一栏进行操作，从而将编辑后的数据存到表格中
+      },
+      sumbitAddRow() {
+        var id = this.mockId();
+        //todo:请求添加是否成功，成功才加入，后端还要返回资源项id
+        var hr = this.radio==1;
+        var index = this.radio - 1;
+        var shiftIndex = this.shiftRadio - 1;
+
+        var cd = Date.now();
+
+        var todayStr = this.formatDate(cd);
+
+        this.tableData[index].children.push({
+          id: id,
+          date: todayStr,
+          name: this.addForm.name,
+          number: this.addForm.number,
+          shift: this.shiftInfo[shiftIndex],
+          hr: hr
+        })
+        
+        this.addFormVisible = false
       },
       //保存编辑
       sumbitEditRow() {
@@ -216,6 +298,7 @@ var _index;
         
         this.tableData[this.radio-1].children[childrenIndex].name = this.editForm.name;
         this.tableData[this.radio-1].children[childrenIndex].number = this.editForm.number;
+        this.tableData[this.radio-1].children[childrenIndex].shift = this.shiftInfo[this.shiftRadio-1];
 
         this.editFormVisible = false;
       },
@@ -248,24 +331,6 @@ var _index;
           })
         })
       },
-      sumbitAddRow() {
-        var id = this.mockId();
-        //todo:请求添加是否成功，成功才加入，后端还要返回资源项id
-        var index = this.radio - 1;
-
-        var cd = Date.now();
-
-        var todayStr = this.formatDate(cd);
-
-        this.tableData[index].children.push({
-          id: id,
-          date: todayStr,
-          name: this.addForm.name,
-          number: this.addForm.number
-        })
-        
-        this.addFormVisible = false
-      },
       cancel() {
         this.addFormVisible = false;
         this.editFormVisible = false;
@@ -297,6 +362,7 @@ var _index;
             for(var i=0; i<human_list.length; i++){
               var human_item = human_list[i];
               human_item.hr = true;
+              human_item.shift = this.shiftInfo[human_item.shift - 1];
               this.tableData[0].children.push(human_item);
             }
 
@@ -304,6 +370,7 @@ var _index;
             for(var i=0; i<device_list.length; i++){
               var device_item = device_list[i];
               device_item.hr = false;
+              device_item.shift = this.shiftInfo[device_item.shift - 1];
               this.tableData[1].children.push(device_item);
             }
           }
