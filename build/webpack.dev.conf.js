@@ -61,10 +61,10 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     },
     //模拟数据配置项
     before(app) {
-      app.get('/product-3-2020-10-01', (req, res) => {
+      app.get('/product/3/2020-10-01', (req, res) => {
         res.json(product3Data)
       })
-      app.get('/product-3-2020-10-17-2020-10-22', (req, res) => {
+      app.post('/product/3', (req, res) => {
         res.json(product3Data_day)
       })
       app.get('/resource-2020-10-01', (req, res) => {

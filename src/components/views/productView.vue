@@ -1,5 +1,5 @@
 <template>
-  <div class="container" v-if="dataLoaded">
+  <div class="container">
     <el-row id="ProductHeader">
       <el-col :span="5" style="padding-top: 0.625rem; text-align: right;">
         <el-select v-model="value" placeholder="请选择" @change="optionChange()">
@@ -41,12 +41,12 @@
       </el-col>
       <el-col :span="13"></el-col>
     </el-row>
-    <product-gantt v-if="showHour"
+    <product-gantt v-if="showHour&&dataLoaded"
       class="left-container"
       :pdtTasks="pdtTasks"
       :start_date="timeValue"
     ></product-gantt>
-   <product-gantt-day v-if="showDay"
+   <product-gantt-day v-if="showDay&&dataLoaded"
       class="left-container"
       :pdtTasks_day="pdtTasks_day"
       :start_date="dateRange[0]"
@@ -139,25 +139,52 @@ export default {
     }
   },
   methods: {
-    getProductInfo () {
-      axios.get('/product-'+this.$route.query.id+'-2020-10-01')
+    getProductInfo (byHour, pdata) {
+      var that = this;
+      if(byHour){
+        axios.get('/product/'+this.$route.query.id+'/'+this.timeValue)
         .then(request => {
-          var res = request.data
-          if ( res.ret && res.tasks ){
-            this.pdtTasks = res.tasks
+          var res = request.data;
+          if ( res.ret && res.content ){
+            var tempTask = res.content.tasks;
+
+            for(var i=0; i<tempTask.data.length; i++){
+              tempTask.data[i].text = res.content.product_name;
+            }
+            for(var i=0; i<tempTask.links.length; i++){
+              tempTask.links[i].type = "0";
+            }
+
+            this.pdtTasks = tempTask;
             this.dataLoaded = true
           }
           this.reload("hour")
         })
+        .catch(function (error) {
+          that.pdtTasks = {data: [], links: []};
+          that.reload("hour");
+        });
+      }
+      else{
+        axios.post('/product/'+this.$route.query.id, pdata)
+        .then(request => {
+          var res = request.data;
+            if ( res.ret && res.content ){
+              var tempTask = res.content.tasks;
 
-      axios.get('/product-'+this.$route.query.id+'-2020-10-17-2020-10-22')
-      .then(request => {
-        var res = request.data
-        if ( res.ret && res.tasks ){
-          this.pdtTasks_day = res.tasks
-          this.dataLoaded = true
-        }
-      })
+              for(var i=0; i<tempTask.data.length; i++){
+                tempTask.data[i].text = res.content.product_name;
+              }
+              for(var i=0; i<tempTask.links.length; i++){
+                tempTask.links[i].type = "0";
+              }
+
+              this.pdtTasks_day = tempTask;
+              this.dataLoaded = true
+            }
+        })
+        this.reload("day")
+      }
     },
     optionChange(){
       //console.log("mode change: "+this.value)
@@ -179,6 +206,7 @@ export default {
          return;
        }
        var ans = this.$parent.sendMessage(this.timeValue, "/backendUrl", "get");
+       this.getProductInfo(true, {});
        //console.log("child get Ans: "+ans);
        //todo 根据接收到的数据设置图
        this.reload("hour");
@@ -186,6 +214,11 @@ export default {
     rangeChange(){
       // console.log(this.dateRange);
       var ans = this.$parent.sendMessage(this.dateRange, "/backendUrl", "get");
+      var pdata = {
+        start_date: this.dateRange[0],
+        end_date: this.dateRange[1]
+      }
+      this.getProductInfo(false, pdata);
       // console.log("child get Ans: "+ans);
       //todo 根据接收到的数据设置图
       this.reload("day");
@@ -206,16 +239,16 @@ export default {
     }
   },
   mounted () {
-    this.getProductInfo();
-
-    this.pdtTasks = {};
-    this.pdtTasks_day = {data: [], links: []};
-    this.timeValue = "2020-10-1";
+    this.timeValue = "2020-11-02";
     this.dateRange = [
-      "2020-10-17",
-      "2020-10-22"
+      "2020-11-02",
+      "2020-11-02"
     ]
 
+    // this.pdtTasks = {data: [], links: []};
+    // this.pdtTasks_day = {data: [], links: []};
+
+    this.getProductInfo(true, {});
   },
 }
 </script>

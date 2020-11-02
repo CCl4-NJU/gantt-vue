@@ -1,47 +1,45 @@
 {
   "ret": true,
-  "tasks": {
-    "data": [
-      {
-        "id": 1,
-        "resource": "Line 3",
-        "text": "产品3",
-        "start_date": "2020-10-01 18:00",
-        "duration": 180
-      },
-      {
-        "id": 2,
-        "resource": "Line 4",
-        "text": "产品3",
-        "start_date": "2020-10-01 09:00",
-        "duration": 120
-      },
-      {
-        "id": 4,
-        "resource": "小明",
-        "text": "产品3",
-        "start_date": "2020-10-01 09:00",
-        "duration": 120
-      },
-      {
-        "id": 5,
-        "resource": "小明",
-        "text": "产品3",
-        "start_date": "2020-10-01 18:00",
-        "duration": 60
-      },
-      {
-        "id": 6,
-        "resource": "张三",
-        "text": "产品3",
-        "start_date": "2020-10-01 19:00",
-        "duration": 120
-      }
-    ],
-    "links": [
-      {"id": 1, "source": 2, "target": 1, "type": "0"},
-      {"id": 2, "source": 4, "target": 5, "type": "0"},
-      {"id": 3, "source": 5, "target": 6, "type": "0"}
-    ]
+  "content": {
+    "product_name": "产品3",
+    "tasks": {
+      "data": [
+        {
+          "id": 1,
+          "resource": "Line 3",
+          "start_date": "2020-10-01 18:00",
+          "duration": 180
+        },
+        {
+          "id": 2,
+          "resource": "Line 4",
+          "start_date": "2020-10-01 09:00",
+          "duration": 120
+        },
+        {
+          "id": 4,
+          "resource": "小明",
+          "start_date": "2020-10-01 09:00",
+          "duration": 120
+        },
+        {
+          "id": 5,
+          "resource": "小明",
+          "start_date": "2020-10-01 18:00",
+          "duration": 60
+        },
+        {
+          "id": 6,
+          "resource": "张三",
+          "start_date": "2020-10-01 19:00",
+          "duration": 120
+        }
+      ],
+      "links": [
+        {"id": 1, "source": 2, "target": 1},
+        {"id": 2, "source": 4, "target": 5},
+        {"id": 3, "source": 5, "target": 6}
+      ]
+    }
   }
 }
