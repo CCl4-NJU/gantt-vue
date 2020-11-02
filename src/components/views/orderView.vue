@@ -1,5 +1,5 @@
 <template>
-  <div class="container" v-if="dataLoaded">
+  <div class="container" v-if="true">
     <el-row id="headRow">
       <el-col :span="6">
         <div id="datePicker">
@@ -18,14 +18,14 @@
       <el-col :span="12" id="barCol" style="">
         <div id="progress">
           <p>按期交货率</p>
-          <p class="smallFont" id="ddl">截至{{ddl}}之前</p>
+          <p class="smallFont" id="ddl">截至{{timeValue}}之前</p>
           <el-progress :text-inside="true" :stroke-width="26" :percentage="percentage" :status="status"></el-progress>
         </div>
       </el-col>
       <el-col :span="6"><el-tag type="danger" effect="dark" id="redTag">红色为延期订单</el-tag></el-col>
     </el-row>
     <order-gantt
-      v-if="showOrder"
+      v-if="showOrder&&dataLoaded"
       class="Ocontainer"
       :orderTasks="orderTasks"
       :currentDate="timeValue"
@@ -45,8 +45,8 @@ export default {
       dataLoaded: false,
       orderTasks: {},
       timeValue: '',  //当前选择时间，变化时触发timechange函数
-      ddl: '2017年10月1日' , //中间按期交货率的截至日期说明
-      percentage: 70, //按期交货率
+      //ddl: '2017年10月1日' , //中间按期交货率的截至日期说明
+      percentage: 0, //按期交货率
       showOrder: false,
       status: 'warning',  //按期交货率颜色，根据百分比自动变化，在setProgress函数中自动设置
                           // <60为红色，60~80为橙色，80~100为绿色
@@ -79,12 +79,35 @@ export default {
   },
   methods: {
     getOrderInfo () {
-      axios.get('/order-2020-10-01')
+      this.orderTasks = {
+        data: [],
+        links: []
+      };
+      this.setProgress(0);
+      
+      axios.get('/order/'+this.timeValue)
         .then(request => {
           var res = request.data
-          if ( res.ret && res.tasks ){
-            this.orderTasks = res.tasks
-            this.dataLoaded = true
+          if ( res.ret && res.content ){
+            var tempTask = res.content.tasks;
+
+            for(var i=0; i<tempTask.data.length; i++){
+              var prog = tempTask.data[i].progress;
+              if(tempTask.data[i].parent){
+                tempTask.data[i].text = 
+                  tempTask.data[i].text + (prog*100) + "%";
+              }
+              tempTask.data[i].start_date = this.timeValue + " 6:00";
+              tempTask.data[i].duration = 360;
+              tempTask.data[i].color = prog>=1.0?"lime":"darkturquoise";
+              if(tempTask.data[i].deal_date<tempTask.data[i].expc_date){
+                tempTask.data[i].color = "red";
+              }
+            }
+
+            this.orderTasks = tempTask;
+            this.setProgress(res.content.delivery_rate);
+            this.dataLoaded = true;
           }
           this.showOrder = true;
         })
@@ -96,6 +119,9 @@ export default {
       var ans = this.$parent.sendMessage(this.timeValue, "/backendUrl", "get");
       // console.log("child get Ans: "+ans);
       //todo 根据接收到的数据设置图和按期交货率
+
+      this.getOrderInfo();
+
       this.showOrder = false;
       this.$nextTick(() => (this.showOrder = true))
     },
@@ -116,9 +142,8 @@ export default {
     },
   },
   mounted () {
+    this.timeValue = '2020-10-01';
     this.getOrderInfo();
-    this.setProgress(92);
-    this.timeValue = "2020-10-17";
   }
 }
 </script>

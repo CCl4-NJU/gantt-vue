@@ -73,7 +73,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       app.get('/resource-2020-10-17', (req, res) => {
         res.json(resourceData2)
       })
-      app.get('/order-2020-10-01', (req, res) => {
+      app.get('/order/2020-10-01', (req, res) => {
         res.json(orderData)
       })
       app.get('/percent-2020-10-01', (req, res) => {
