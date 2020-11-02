@@ -1,14 +1,16 @@
 <template>
   <!-- <res-controll></res-controll> -->
-  <hello-world></hello-world>
+  <!-- <hello-world></hello-world> -->
+  <resource-list></resource-list>
 </template>
 
 <script>
-import resControll from "../sub/ResourceList.vue"
+import ResourceList from '../sub/ResourceList.vue'
+//import resControll from "../sub/ResourceList.vue"
 import helloWorld from "../sub/HelloWorld.vue"
 export default {
   name: 'resControll',
-  components: {resControll, helloWorld},
+  components: {ResourceList, helloWorld},
 }
 </script>
 
