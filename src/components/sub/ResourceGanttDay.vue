@@ -53,7 +53,7 @@ export default {
 
     gantt.attachEvent("onTaskClick", function(id, e){
       var pid = -1;
-      const data = that.tasks.data;
+      const data = that.resTasks.data;
       for(var i=0; i<data.length; i++){
         if(data[i].id==id){
           console.log("found!");

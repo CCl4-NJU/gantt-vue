@@ -50,11 +50,13 @@
     </el-table>
   </div>
   <el-dialog
+    center="true"
     title="新增"
     :visible.sync="addFormVisible"
   >
     <el-form
       :model="addForm"
+      :label-position="'left'"
       ref="addForm"
     >
       <el-form-item
@@ -112,17 +114,18 @@
           </template>
       </el-form-item>
     </el-form>
-    <div>
+    <span slot="footer" class="dialog-footer">
       <el-button @click="cancel()">取消</el-button>
       <el-button
         type="primary"
         @click="sumbitAddRow()"
         :loading="addLoading"
       >确定</el-button>
-    </div>
+    </span>
   </el-dialog>
 
   <el-dialog
+    center="true"
     title="编辑"
     :visible.sync="editFormVisible"
   >
@@ -187,14 +190,14 @@
           </template>
       </el-form-item>
     </el-form>
-    <div>
+    <span slot="footer" class="dialog-footer">
       <el-button @click="cancel()">取消</el-button>
       <el-button
         type="primary"
         @click="sumbitEditRow()"
         :loading="addLoading"
       >确定</el-button>
-    </div>
+    </span>
   </el-dialog>
 </div>
 </template>
@@ -205,7 +208,7 @@ var _index;
     name: 'ResourceList',
     data() {
       return {
-        formLabelWidth: '300px',
+        formLabelWidth: '150px',
 
         addFormVisible: false,//是否显示新增窗口
         addLoading: false,
