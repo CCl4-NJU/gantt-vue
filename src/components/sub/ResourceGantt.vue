@@ -50,16 +50,18 @@ export default {
 
     gantt.attachEvent("onTaskClick", function(id, e){
       var pid = -1;
+      var current_date = "";
       const data = that.resTasks.data;
       for(var i=0; i<data.length; i++){
         if(data[i].id==id){
-          console.log("found!");
+          //console.log("found!");
           pid = data[i].product_id;
+          current_date = data[i].start_date.split(" ")[0];
           break;
         }
       }
       if(pid>-1){
-        that.$router.push({path: "/product", query: {id: pid}});
+        that.$router.push({path: "/product", query: {id: pid, date: current_date}});
       }
       return true;
     });

@@ -66,12 +66,8 @@ export default {
   data () {
     return {
       dataLoaded: false,
-      pdtTasks: {},
-      pdtTasks_day: {
-        default () {
-          return {data: [], links: []}
-        }
-      },
+      pdtTasks: {data: [], links: []},
+      pdtTasks_day: {data: [], links: []},
       value: 'hour',  //当前展示模式是按小时展示还是按天展示
       timeValue: "",  //如果是按小时展示的话，时间数值，变化时触发timechange函数
       dateRange: "",  //如果是按天展示的话，时间区间，List格式，dateRange[0]~dateRange[1]，变化时触发rangeChange函数
@@ -239,7 +235,7 @@ export default {
     }
   },
   mounted () {
-    this.timeValue = "2020-11-02";
+    this.timeValue = this.$route.query.date;
     this.dateRange = [
       "2020-11-02",
       "2020-11-02"
