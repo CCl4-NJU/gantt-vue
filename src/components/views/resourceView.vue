@@ -1,5 +1,5 @@
 <template>
-  <div class="container" v-if="dataLoaded">
+  <div class="container">
     <el-row id="resourceHeader">
       <el-col :span="5" style="padding-top: 0.625rem; text-align: right;">
         <el-select v-model="value" placeholder="请选择" @change="optionChange()">
@@ -44,13 +44,13 @@
       </el-col>
     </el-row>
     <resource-gantt
-      v-if="showHour"
+      v-if="showHour&&dataLoaded"
       class="left-container"
       :resTasks="resTasks"
       :start_date="timeValue"
     ></resource-gantt>
     <resource-gantt-day
-      v-if="showDay"
+      v-if="showDay&&dataLoaded"
       class="left-container"
       :resTasks="resTasks_day"
       :start_date="dateRange[0]"
@@ -70,7 +70,10 @@ export default {
   data () {
     return {
       dataLoaded: false,
-      resTasks: {},
+      resTasks: {
+        data: [],
+        links: []
+      },
       resTasks_day: {
         data: [],
         links: []
@@ -170,6 +173,7 @@ export default {
             this.resTasks_day = res.content.tasks
             this.dataLoaded = true
           }
+          console.log(this.resTasks_day);
           this.reload("day");
         })
         .catch(function (error) {
@@ -184,12 +188,14 @@ export default {
         case "hour":
           document.getElementById("normalPicker").style.display = "";
           document.getElementById("rangePicker").style.display = "none";
-          this.reload("hour");
+          //this.reload("hour");
+          this.getResourceInfo(true);
           break;
         case "day":
           document.getElementById("normalPicker").style.display = "none";
           document.getElementById("rangePicker").style.display = "block";
-          this.reload("day");
+          //this.reload("day");
+          this.getResourceInfo(false);
           break;
       }
     },
@@ -202,7 +208,7 @@ export default {
        this.getResourceInfo(true);
       //  console.log("child get Ans: "+ans);
        //todo 根据接收到的数据设置图
-       this.reload("hour");
+       //this.reload("hour");
     },
     rangeChange(){
       // console.log(this.dateRange);
@@ -210,7 +216,7 @@ export default {
       this.getResourceInfo(false);
       // console.log("child get Ans: "+ans);
       //todo 根据接收到的数据设置图
-      this.reload("day");
+      //this.reload("day");
     },
     reload(model){
       switch(model){
@@ -225,18 +231,29 @@ export default {
           this.$nextTick(() => (this.showDay = true))
           break;
       }
+    },
+    formatDate(date) {
+      var d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
+    
+      if (month.length < 2) month = '0' + month;
+      if (day.length < 2) day = '0' + day;
+    
+      return [year, month, day].join('-');
     }
   },
   mounted () {
-    this.timeValue = "2020-10-01";
+    this.timeValue = this.formatDate(Date.now());
     this.dateRange = [
-      "2020-10-01",
-      "2020-10-03"
+      this.formatDate(Date.now()),
+      this.formatDate(Date.now())
     ]
 
     this.getResourceInfo(true);
 
-    this.reload("hour");
+    //this.reload("hour");
   },
 }
 </script>

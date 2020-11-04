@@ -156,10 +156,10 @@ export default {
           }
           this.reload("hour")
         })
-        .catch(function (error) {
-          that.pdtTasks = {data: [], links: []};
-          that.reload("hour");
-        });
+        // .catch(function (error) {
+        //   that.pdtTasks = {data: [], links: []};
+        //   that.reload("hour");
+        // });
       }
       else{
         axios.post('/product/'+this.$route.query.id, pdata)
