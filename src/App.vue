@@ -128,12 +128,36 @@ export default {
       		return ans;
       	}
       }
+    },
+    changeIndex () {
+      var url = this.$route.path;
+      
+      if(url.indexOf("order") != -1){
+        this.activeIndex = "1-1";
+      }
+      else if(url.indexOf("product") != -1){
+        this.activeIndex = "1-2";
+      }
+      else if(url.indexOf("resource") != -1){
+        this.activeIndex = "1-3";
+      }
+      else if(url.indexOf("table") != -1){
+        this.activeIndex = "1-4";
+      }
+      else if(url.indexOf("resControll") != -1){
+        this.activeIndex = "3-2";
+      }
+      else{
+        this.activeIndex = "0";
+      }
     }
   },
   mounted () {
-    // this.getProductInfo();
     this.initActiveIndex();
   },
+  watch: {
+    '$route':'changeIndex'
+  }
 }
 </script>
 

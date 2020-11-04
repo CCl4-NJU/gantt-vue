@@ -50,7 +50,7 @@
     </el-table>
   </div>
   <el-dialog
-    center="true"
+    center
     title="新增"
     :visible.sync="addFormVisible"
   >
@@ -125,7 +125,7 @@
   </el-dialog>
 
   <el-dialog
-    center="true"
+    center
     title="编辑"
     :visible.sync="editFormVisible"
   >
