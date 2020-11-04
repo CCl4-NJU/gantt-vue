@@ -215,6 +215,7 @@ var _index;
         addForm: [],
 
         editFormVisible: false,//是否显示编辑窗口
+        editId: '',
         editForm: [],
 
         radio: 1,//随点击位置而变，根据radio可以获取到人力资源或硬件资源的children数据
@@ -266,47 +267,83 @@ var _index;
         } else{
           this.shiftRadio = 3;
         }
+
+        this.editId = row.id;
         // console.log(index)
         // console.log(_index)
         //取到这一栏的值，也就是明白是在那一栏进行操作，从而将编辑后的数据存到表格中
       },
       sumbitAddRow() {
-        var id = this.mockId();
-        //todo:请求添加是否成功，成功才加入，后端还要返回资源项id
-        var hr = this.radio==1;
-        var index = this.radio - 1;
-        var shiftIndex = this.shiftRadio - 1;
+        var that = this;
+        var todayStr = this.formatDate(Date.now());
 
-        var cd = Date.now();
-
-        var todayStr = this.formatDate(cd);
-
-        this.tableData[index].children.push({
-          id: id,
+        var addItem = {
           date: todayStr,
+          type: this.radio,
           name: this.addForm.name,
           number: this.addForm.number,
-          shift: this.shiftInfo[shiftIndex],
-          hr: hr
+          shift: this.shiftRadio
+        }
+        axios.post('/addResource', addItem)
+        .then(request => {
+          var hr = that.radio==1;
+          var index = that.radio - 1;
+          var shiftIndex = that.shiftRadio - 1;
+
+          var res = request.data
+          if ( res.ret ){
+            var id = res.content.id;
+            id = id + that.formatDate(Date.now())
+
+            that.tableData[index].children.push({
+              id: id,
+              date: todayStr,
+              name: that.addForm.name,
+              number: that.addForm.number,
+              shift: that.shiftInfo[shiftIndex],
+              hr: hr
+            })
+          }
+        })
+        .catch(function(err){
+          this.$message({
+            type: 'error',
+            message: '插入失败!',
+          })
         })
         
         this.addFormVisible = false
       },
       //保存编辑
       sumbitEditRow() {
-        //todo:根据后端返回结果确认是否修改成功
-
-        var childrenIndex = this.radio==1 ? 
-          this.getChildrenIndex(_index, true) :this.getChildrenIndex(_index, false); 
-        
-        this.tableData[this.radio-1].children[childrenIndex].name = this.editForm.name;
-        this.tableData[this.radio-1].children[childrenIndex].number = this.editForm.number;
-        this.tableData[this.radio-1].children[childrenIndex].shift = this.shiftInfo[this.shiftRadio-1];
+        var that = this;
+        var changeItem = {
+          id: this.editId,
+          name: this.addForm.name,
+          number: this.addForm.number,
+          shift: this.shiftRadio
+        }
+        axios.post('/updateResource', changeItem)
+        .then(request => {
+          var childrenIndex = that.radio==1 ? 
+          that.getChildrenIndex(_index, true) :that.getChildrenIndex(_index, false); 
+          
+          that.tableData[that.radio-1].children[childrenIndex].name = that.editForm.name;
+          that.tableData[that.radio-1].children[childrenIndex].number = that.editForm.number;
+          that.tableData[that.radio-1].children[childrenIndex].shift = that.shiftInfo[that.shiftRadio-1];
+        })
+        .catch(function(err){
+          this.$message({
+            type: 'error',
+            message: '编辑失败!',
+          })
+        })
 
         this.editFormVisible = false;
       },
       handleDelete(index, row) {
         _index = index;
+        var that = this;
         if(row.hr){
           this.radio = 1;
         } else{
@@ -319,18 +356,35 @@ var _index;
           type: 'warning'
         }).then(() => {
           //todo,根据后端返回结果确认是否删除成功
-          var childrenIndex = this.getChildrenIndex(_index, row.hr)
-          
-          this.tableData[this.radio-1].children.splice(childrenIndex, 1)
-          //storage.set('tableform', this.tableform)
-          this.$message({
-            type: 'success',
-            message: '删除成功!',
+          axios.get('/deleteResource/'+row.id)
+          .then(request => {
+            var res = request.data;
+            if( res.ret ){
+              var childrenIndex = that.getChildrenIndex(_index, row.hr)
+            
+              that.tableData[that.radio-1].children.splice(childrenIndex, 1)
+              
+              that.$message({
+                type: 'success',
+                message: '删除成功!',
+              })
+            } else{
+              that.$message({
+                type: 'error',
+                message: '删除失败!'
+              })
+            }
+          })
+          .catch(function(err){
+            that.$message({
+              type: 'error',
+              message: '删除失败!'
+            })
           })
         }).catch((err) => {
           this.$message({
             type: 'error',
-            message: err
+            message: '删除取消!'
           })
         })
       },
@@ -380,11 +434,7 @@ var _index;
         })
       },
       mockId(){
-        var total = this.tableData.length;
-        total += (this.tableData[0].children.length);
-        total += (this.tableData[1].children.length);
-
-        return (Date.now()).toString();
+        return ""+new Date().valueOf();
       }
     },
     mounted(){
