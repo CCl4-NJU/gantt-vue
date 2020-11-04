@@ -1,28 +1,30 @@
 {
   "ret": true,
-  "device_percent": 50,
-  "human_percent": 50,
-  "resourceList": [{
-      "name": "Line 1"
+  "content": {
+    "device_percent": 50,
+    "human_percent": 50,
+    "resourceList": [{
+        "name": "Line 1"
+      }, {
+        "name": "Line 2"
+      }, {
+        "name": "张三"
+      }, {
+        "name": "李四"
+      }, {
+        "name": "张扬"
+      }, {
+        "name": "李彤"
+    }],
+    "tableData": [{
+      "date": "2020-09",
+      "progress": [23, 78, 23, 76, 23, 76]
     }, {
-      "name": "Line 2"
+      "date": "2020-10",
+      "progress": [43, 98, 43, 96, 43, 96]
     }, {
-      "name": "张三"
-    }, {
-      "name": "李四"
-    }, {
-      "name": "张扬"
-    }, {
-      "name": "李彤"
-  }],
-  "tableData": [{
-    "date": "2020-09",
-    "progress": [23, 78, 23, 76, 23, 76]
-  }, {
-    "date": "2020-10",
-    "progress": [43, 98, 43, 96, 43, 96]
-  }, {
-    "date": "2020-11",
-    "progress": [33, 88, 33, 86, 33, 86]
-  }]
+      "date": "2020-11",
+      "progress": [33, 88, 33, 86, 33, 86]
+    }]
+  }
 }

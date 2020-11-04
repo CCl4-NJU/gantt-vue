@@ -194,25 +194,25 @@ export default {
   },
   methods:{
     rangeChange(){
-      console.log(this.dateRange);
+      //console.log(this.dateRange);
       //var ans = this.$parent.sendMessage(this.dateRange, "/backendUrl", "get");
       
       this.start_date = this.dateRange[0];
       this.end_date = this.dateRange[1];
       
-      this.getPercentInfoByDay(this.start_date);
+      this.getPercentInfoByDay();
 
       // console.log("child get Ans: "+ans);
       //todo 根据接收到的数据设置图
     },
     monthChange(){
-      console.log(this.monthRange);
+      //console.log(this.monthRange);
       var ans = this.$parent.sendMessage(this.monthRange, "/backendUrl", "get");
 
       this.start_date = this.monthRange[0];
       this.end_date = this.monthRange[1];
       
-      this.getPercentInfoByWeek(this.start_date);
+      this.getPercentInfoByMonth();
 
       // console.log("child get Ans: "+ans);
       //todo 根据接收到的数据设置图
@@ -223,41 +223,93 @@ export default {
         case "day":
           document.getElementById("rangePicker").style.display = "";
           document.getElementById("monthPicker").style.display = "none";
+          
+          this.start_date = this.dateRange[0];
+          this.end_date = this.dateRange[1];
+          this.getPercentInfoByDay();
           break;
         case "week":
           document.getElementById("rangePicker").style.display = "none";
           document.getElementById("monthPicker").style.display = "block";
+          
+          this.start_date = this.monthRange[0];
+          this.end_date = this.monthRange[1];
+          this.getPercentInfoByMonth();
           break;
       }
     },
-    getPercentInfoByDay(start_date){
-      axios.get('/percent-'+start_date)
+    getPercentInfoByDay(){
+      var that = this;
+      var pdata = {
+        start_date: this.start_date,
+        end_date: this.end_date
+      }
+      axios.get('/percent/'+pdata.start_date+'/'+pdata.end_date)
         .then(request => {
           var res = request.data
-          if ( res.ret ){
-            this.device_percent = res.device_percent
-            this.human_percent = res.human_percent
-            this.resourceList = res.resourceList
-            this.tableData = res.tableData
+          if ( res.ret&&res.content ){
+            var content = res.content;
+            this.device_percent = content.device_percent
+            this.human_percent = content.human_percent
+            this.resourceList = content.resourceList
+            this.tableData = content.tableData
           }
+        })
+        .catch(function(err){
+          that.device_percent = 0
+          that.human_percent = 0
+          that.resourceList = []
+          that.tableData = []
         })
     },
-    getPercentInfoByWeek(start_date){
-      var start_month = start_date.substring(0,7);
-      axios.get('/percent-'+start_month)
+    getPercentInfoByMonth(){
+      var that = this;
+      var pdata = {
+        start_date: this.monthRange[0].substring(0,7),
+        end_date: this.monthRange[1].substring(0,7)
+      }
+      axios.get('/percent/month/'+pdata.start_date+'/'+pdata.end_date)
         .then(request => {
           var res = request.data
-          if ( res.ret ){
-            this.device_percent = res.device_percent
-            this.human_percent = res.human_percent
-            this.resourceList = res.resourceList
-            this.tableData = res.tableData
+          if ( res.ret&&res.content ){
+            var content = res.content;
+            this.device_percent = content.device_percent
+            this.human_percent = content.human_percent
+            this.resourceList = content.resourceList
+            this.tableData = content.tableData
           }
         })
+        .catch(function(err){
+          that.device_percent = 0
+          that.human_percent = 0
+          that.resourceList = []
+          that.tableData = []
+        })
+    },
+    formatDate(date) {
+      var d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
+    
+      if (month.length < 2) month = '0' + month;
+      if (day.length < 2) day = '0' + day;
+    
+      return [year, month, day].join('-');
     }
   },
   mounted () {
-    this.getPercentInfoByDay(this.start_date);
+    this.dateRange = [
+      this.formatDate(Date.now()),
+      this.formatDate(Date.now())
+    ]
+    this.monthRange = [
+      this.formatDate(Date.now()),
+      this.formatDate(Date.now())
+    ]
+    this.start_date = this.dateRange[0];
+    this.end_date = this.dateRange[1];
+    this.getPercentInfoByDay();
   }
 }
 </script>
