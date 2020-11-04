@@ -156,10 +156,10 @@ export default {
           }
           this.reload("hour")
         })
-        // .catch(function (error) {
-        //   that.pdtTasks = {data: [], links: []};
-        //   that.reload("hour");
-        // });
+        .catch(function (error) {
+          that.pdtTasks = {data: [], links: []};
+          that.reload("hour");
+        });
       }
       else{
         axios.post('/product/'+this.$route.query.id, pdata)
@@ -178,8 +178,12 @@ export default {
               this.pdtTasks_day = tempTask;
               this.dataLoaded = true
             }
+          this.reload("day")
         })
-        this.reload("day")
+        .catch(function (error) {
+          that.pdtTasks = {data: [], links: []};
+          that.reload("day");
+        });
       }
     },
     optionChange(){
@@ -202,10 +206,9 @@ export default {
          return;
        }
        var ans = this.$parent.sendMessage(this.timeValue, "/backendUrl", "get");
-       this.getProductInfo(true, {});
        //console.log("child get Ans: "+ans);
        //todo 根据接收到的数据设置图
-       this.reload("hour");
+       this.getProductInfo(true, {});
     },
     rangeChange(){
       // console.log(this.dateRange);
@@ -214,10 +217,9 @@ export default {
         start_date: this.dateRange[0],
         end_date: this.dateRange[1]
       }
-      this.getProductInfo(false, pdata);
       // console.log("child get Ans: "+ans);
       //todo 根据接收到的数据设置图
-      this.reload("day");
+      this.getProductInfo(false, pdata);
     },
     reload(model){
       switch(model){
@@ -232,13 +234,24 @@ export default {
           this.$nextTick(() => (this.showDay = true))
           break;
       }
+    },
+    formatDate(date) {
+      var d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
+    
+      if (month.length < 2) month = '0' + month;
+      if (day.length < 2) day = '0' + day;
+    
+      return [year, month, day].join('-');
     }
   },
   mounted () {
     this.timeValue = this.$route.query.date;
     this.dateRange = [
-      "2020-11-02",
-      "2020-11-02"
+      this.formatDate(Date.now()),
+      this.formatDate(Date.now())
     ]
 
     // this.pdtTasks = {data: [], links: []};
