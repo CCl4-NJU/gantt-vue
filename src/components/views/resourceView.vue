@@ -52,7 +52,7 @@
     <resource-gantt-day
       v-if="showDay"
       class="left-container"
-      :resTasks="resTasks"
+      :resTasks="resTasks_day"
       :start_date="dateRange[0]"
       :end_date="dateRange[1]"
     ></resource-gantt-day>
@@ -71,6 +71,10 @@ export default {
     return {
       dataLoaded: false,
       resTasks: {},
+      resTasks_day: {
+        data: [],
+        links: []
+      },
       value: 'hour',  //以下变量含义与productView相同
       timeValue: "",
       dateRange: "",
@@ -138,16 +142,41 @@ export default {
     }
   },
   methods: {
-    getResourceInfo () {
-      axios.get('/resource-2020-10-01')
+    getResourceInfo (byHour) {
+      var that = this;
+      if(byHour){
+        axios.get('/resource-'+this.timeValue)
         .then(request => {
           var res = request.data
-          if ( res.ret && res.tasks ){
-            this.resTasks = res.tasks
+          if ( res.ret && res.content ){
+            this.resTasks = res.content.tasks
             this.dataLoaded = true
           }
           this.reload("hour");
         })
+        .catch(function (error) {
+          that.resTasks = {data: [], links: []};
+          that.reload("hour");
+        });
+      } else{
+        var pdata = {
+          start_date: this.dateRange[0],
+          end_date: this.dateRange[1]
+        };
+        axios.post('/resource', pdata)
+        .then(request => {
+          var res = request.data
+          if ( res.ret && res.content ){
+            this.resTasks_day = res.content.tasks
+            this.dataLoaded = true
+          }
+          this.reload("day");
+        })
+        .catch(function (error) {
+          that.resTasks_day = {data: [], links: []};
+          that.reload("day");
+        });
+      }
     },
     optionChange(){
       // console.log("mode change: "+this.value);
@@ -170,6 +199,7 @@ export default {
       }
       //  console.log(this.timeValue);
        var ans = this.$parent.sendMessage(this.timeValue, "/backendUrl", "get");
+       this.getResourceInfo(true);
       //  console.log("child get Ans: "+ans);
        //todo 根据接收到的数据设置图
        this.reload("hour");
@@ -177,6 +207,7 @@ export default {
     rangeChange(){
       // console.log(this.dateRange);
       var ans = this.$parent.sendMessage(this.dateRange, "/backendUrl", "get");
+      this.getResourceInfo(false);
       // console.log("child get Ans: "+ans);
       //todo 根据接收到的数据设置图
       this.reload("day");
@@ -197,13 +228,13 @@ export default {
     }
   },
   mounted () {
-    this.getResourceInfo();
-
-    this.timeValue = "2020-10-1";
+    this.timeValue = "2020-10-01";
     this.dateRange = [
-      "2020-10-1",
-      "2020-10-3"
+      "2020-10-01",
+      "2020-10-03"
     ]
+
+    this.getResourceInfo(true);
 
     this.reload("hour");
   },
