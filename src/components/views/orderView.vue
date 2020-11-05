@@ -18,7 +18,7 @@
       <el-col :span="12" id="barCol" style="">
         <div id="progress">
           <p>按期交货率</p>
-          <p class="smallFont" id="ddl">截至{{timeValue}}之前</p>
+          <p class="smallFont" id="ddl">{{timeValue}}</p>
           <el-progress :text-inside="true" :stroke-width="26" :percentage="percentage" :status="status"></el-progress>
         </div>
       </el-col>
@@ -142,7 +142,7 @@ export default {
     },
   },
   mounted () {
-    this.timeValue = '2020-10-01';
+    this.timeValue = this.formatDate(Date.now());
     this.getOrderInfo();
   }
 }
