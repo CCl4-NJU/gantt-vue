@@ -52,7 +52,8 @@ export default {
                           // <60为红色，60~80为橙色，80~100为绿色
       pickerOptions: {  //快捷时间选择的设置
         disabledDate(time) {
-          return time.getTime() > Date.now();
+          return false;
+          // return time.getTime() > Date.now();
         },
         shortcuts: [{
           text: '今天',

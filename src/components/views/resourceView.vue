@@ -92,7 +92,8 @@ export default {
       }],
       pickerOptions: {
         disabledDate(time) {
-          return time.getTime() > Date.now();
+          return false;
+          // return time.getTime() > Date.now();
         },
         shortcuts: [{
           text: '今天',
@@ -231,17 +232,6 @@ export default {
           this.$nextTick(() => (this.showDay = true))
           break;
       }
-    },
-    formatDate(date) {
-      var d = new Date(date),
-      month = '' + (d.getMonth() + 1),
-      day = '' + d.getDate(),
-      year = d.getFullYear();
-    
-      if (month.length < 2) month = '0' + month;
-      if (day.length < 2) day = '0' + day;
-    
-      return [year, month, day].join('-');
     }
   },
   mounted () {
