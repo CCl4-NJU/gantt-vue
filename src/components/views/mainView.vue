@@ -61,7 +61,7 @@
 <style>
   #mainContainer{
     text-align: center;
-    background-image: url(../../assets/background.jpg);
+    background-image: url(../../assets/bg.jpg);
     background-size: 100% 100%;
     border-top: #E9E9EB solid 0.1rem;
   }
@@ -76,9 +76,10 @@
   #blur{
     top: -0.0625rem;
     background-color: #FFFFFF;
-    opacity: 0.75;
+    opacity: 0.5;
   }
   #funcRow{
+    width: 100%;
     padding-left: 5rem;
     padding-right: 5rem;
   }
