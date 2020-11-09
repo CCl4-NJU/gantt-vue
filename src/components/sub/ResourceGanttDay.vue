@@ -52,7 +52,7 @@ export default {
     gantt.config.readonly=true;//只读模式的甘特图
 
     gantt.attachEvent("onTaskClick", function(id, e){
-      var pid = -1;
+      var pid = "";
       var current_date = "";
       const data = that.resTasks.data;
       for(var i=0; i<data.length; i++){
@@ -63,9 +63,11 @@ export default {
           break;
         }
       }
-      if(pid>-1){
+      
+      if(pid!=""){
         that.$router.push({path: "/product", query: {id: pid, date: current_date}});
       }
+
       return true;
     });
 
