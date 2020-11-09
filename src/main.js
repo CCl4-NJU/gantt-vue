@@ -22,7 +22,7 @@ Vue.prototype.formatDate = function (date) {
 }
 Vue.prototype.$axios = axios
 //此处解决跨域问题
-// axios.defaults.baseURL = '/api'
+axios.defaults.baseURL = '/api'
 
 /* eslint-disable no-new */
 new Vue({

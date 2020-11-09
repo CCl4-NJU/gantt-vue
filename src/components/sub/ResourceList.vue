@@ -414,8 +414,8 @@ var _index;
       getResourceInfo(){
         axios.get('/resourceInfo')
         .then(request => {
-          var res = request.data
-          if ( res.ret ){
+          if ( request.data.ret ){
+            var res = request.data.content;
             var human_list = res.human;
             for(var i=0; i<human_list.length; i++){
               var human_item = human_list[i];

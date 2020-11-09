@@ -1,6 +1,7 @@
 {
   "ret": true,
-  "human": [{
+  "content": {
+    "human": [{
       "id": 3,
       "date": "2020-10-01",
       "name": "童小玲组",
@@ -12,18 +13,19 @@
       "name": "王小虎组",
       "number": 4,
       "shift": 3
-  }],
-  "device": [{
-      "id": 5,
-      "date": "2020-09-30",
-      "name": "Line 1",
-      "number": 2,
-      "shift": 1
-    }, {
-      "id": 6,
-      "date": "2020-09-30",
-      "name": "Line 4",
-      "number": 4,
-      "shift": 1
-  }]
+    }],
+    "device": [{
+        "id": 5,
+        "date": "2020-09-30",
+        "name": "Line 1",
+        "number": 2,
+        "shift": 1
+      }, {
+        "id": 6,
+        "date": "2020-09-30",
+        "name": "Line 4",
+        "number": 4,
+        "shift": 1
+    }]
+  }
 }
