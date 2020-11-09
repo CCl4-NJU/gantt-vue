@@ -219,7 +219,7 @@ var _index;
         editForm: [],
 
         radio: 1,//随点击位置而变，根据radio可以获取到人力资源或硬件资源的children数据
-        
+
         shiftRadio: 1,
         shiftInfo: ['全天','早班','晚班'],
 
@@ -250,10 +250,10 @@ var _index;
       },
       handleEdit(index, row) {
         this.editFormVisible = true;
-        
+
         _index = index;
         this.editForm = Object.assign({}, row);
-        
+
         if(row.hr){
           this.radio = 1;
         } else{
@@ -312,7 +312,7 @@ var _index;
             message: '插入失败!',
           })
         })
-        
+
         this.addFormVisible = false
       },
       //保存编辑
@@ -320,15 +320,15 @@ var _index;
         var that = this;
         var changeItem = {
           id: this.editId,
-          name: this.addForm.name,
-          number: this.addForm.number,
+          name: this.editForm.name,
+          number: this.editForm.number,
           shift: this.shiftRadio
         }
         axios.post('/updateResource', changeItem)
         .then(request => {
-          var childrenIndex = that.radio==1 ? 
-          that.getChildrenIndex(_index, true) :that.getChildrenIndex(_index, false); 
-          
+          var childrenIndex = that.radio==1 ?
+          that.getChildrenIndex(_index, true) :that.getChildrenIndex(_index, false);
+
           that.tableData[that.radio-1].children[childrenIndex].name = that.editForm.name;
           that.tableData[that.radio-1].children[childrenIndex].number = that.editForm.number;
           that.tableData[that.radio-1].children[childrenIndex].shift = that.shiftInfo[that.shiftRadio-1];
@@ -350,7 +350,7 @@ var _index;
         } else{
           this.radio = 2;
         }
-        
+
         this.$confirm('此操作将永久删除该资源, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -362,9 +362,9 @@ var _index;
             var res = request.data;
             if( res.ret ){
               var childrenIndex = that.getChildrenIndex(_index, row.hr)
-            
+
               that.tableData[that.radio-1].children.splice(childrenIndex, 1)
-              
+
               that.$message({
                 type: 'success',
                 message: '删除成功!',
@@ -398,10 +398,10 @@ var _index;
         month = '' + (d.getMonth() + 1),
         day = '' + d.getDate(),
         year = d.getFullYear();
-      
+
         if (month.length < 2) month = '0' + month;
         if (day.length < 2) day = '0' + day;
-      
+
         return [year, month, day].join('-');
       },
       getChildrenIndex(index, isHuman){
@@ -445,5 +445,5 @@ var _index;
 </script>
 
 <style scoped>
-  
+
 </style>
