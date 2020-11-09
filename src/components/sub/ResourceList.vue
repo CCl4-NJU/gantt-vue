@@ -291,6 +291,7 @@ var _index;
           var shiftIndex = that.shiftRadio - 1;
 
           var res = request.data
+          console.log(res);
           if ( res.ret ){
             var id = res.content.id;
             id = id + that.formatDate(Date.now())
