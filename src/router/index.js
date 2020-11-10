@@ -7,6 +7,7 @@ import resource from '../components/views/resourceView.vue'
 import resControll from '../components/views/res_ControllView.vue'
 import mainView from '../components/views/mainView.vue'
 import OPF from '../components/views/orderPlanForm.vue'
+import Config from '../components/views/Config.vue'
 
 Vue.use(Router)
 
@@ -47,6 +48,11 @@ export default new Router({
       path: '/OPF',
       name: 'OPF',
       component: OPF
+    },
+    {
+      path: '/config',
+      name: 'config',
+      component: Config
     }
   ]
 })

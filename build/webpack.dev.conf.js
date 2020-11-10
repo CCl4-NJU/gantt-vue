@@ -17,6 +17,7 @@ var product3Data = require('../static/mock/product-3-2020-10-01.json')
 var product3Data_day = require('../static/mock/product-3-2020-10-17-2020-10-22.json')
 var resourceData = require('../static/mock/resource-2020-11-04.json')
 var resourceData2 = require('../static/mock/resource-2020-10-17.json')
+var resourceData3 = require('../static/mock/resource-2020-11-03.json')
 var resourceData_post = require('../static/mock/resource-2020-11-01-2020-11-04.json')
 var orderData = require('../static/mock/order-2020-10-01.json')
 var percentData = require('../static/mock/percent-2020-10-01.json')
@@ -74,6 +75,9 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       })
       app.get('/resource-2020-10-17', (req, res) => {
         res.json(resourceData2)
+      })
+      app.get('/resource-2020-11-03', (req, res) => {
+        res.json(resourceData3)
       })
       app.post('/resource', (req, res) => {
         res.json(resourceData_post)
