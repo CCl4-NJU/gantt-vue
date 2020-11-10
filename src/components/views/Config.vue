@@ -36,12 +36,12 @@ import axios from 'axios'
         //todo 根据接收到的数据设置图
         //this.reload("hour");
       },
-      initManagement(){
+      initManagement: async function(){
         var that = this;
         var pdata = {
           initTime: this.timeValue+" 00:00"
         };
-        axios.post('/timer', pdata)
+        await axios.post('/timer', pdata)
         .then(request => {
           var res = request.data
           if ( res.ret ){
