@@ -25,6 +25,7 @@ var percentData2 = require('../static/mock/percent-2020-10-17.json')
 var percentData3 = require('../static/mock/percent-2020-09.json')
 var resourceInfo = require('../static/mock/resource.json')
 var addresinfo = require('../static/mock/addres.json')
+var init = require('../static/mock/init.json')
 
 var apiRoutes = express.Router()
 app.use(apiRoutes)
@@ -105,6 +106,9 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       })
       app.get('/deleteResource/4', (req, res) => {
         res.json(addresinfo)
+      })
+      app.post('/timer', (req, res) => {
+        res.json(init)
       })
     }
   },

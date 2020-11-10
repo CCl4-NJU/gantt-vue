@@ -39,7 +39,7 @@ import axios from 'axios'
       initManagement(){
         var that = this;
         var pdata = {
-          initTime: this.timeValue
+          initTime: this.timeValue+" 00:00"
         };
         axios.post('/timer', pdata)
         .then(request => {
