@@ -38,7 +38,10 @@ import axios from 'axios'
       },
       initManagement(){
         var that = this;
-        axios.get('/init/'+this.timeValue)
+        var pdata = {
+          initTime: this.timeValue
+        };
+        axios.post('/timer', pdata)
         .then(request => {
           var res = request.data
           if ( res.ret ){
