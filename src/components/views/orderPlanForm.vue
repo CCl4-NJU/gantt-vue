@@ -4,6 +4,7 @@
    :span-method="objectSpanMethod"
    v-loading="loading"
    border
+   :header-cell-style= "{'background-color': '#F5F7FA'}"
    style="width: 100%; margin-top: 20px;">
    <el-table-column
      prop="id"
@@ -31,16 +32,15 @@
       return {
         loading: true,
         spandata: [],
+        locatedata: [],
         tableData: []
       };
     },
     methods: {
       objectSpanMethod({ row, column, rowIndex, columnIndex }) {
         if (columnIndex === 0) {
-          var locate = this.spandata.indexOf(rowIndex);
-          if(locate != -1){locate += 1;}
-          else{locate = 0;}
-          if (rowIndex === 0 || locate != 0) {
+          var locate = this.locatedata.indexOf(rowIndex);
+          if (locate != -1) {
             return {
               rowspan: this.spandata[locate],
               colspan: 1
@@ -54,6 +54,7 @@
         }
       },
       updateData(){
+        this.loading = true;
         // var ans = this.$parent.sendMessage('', "/order/plan", "get");
         var ans = {
           ret: true,
@@ -115,8 +116,6 @@
             }
           ]
         }
-        console.log(ans);
-        console.log(ans.content.length);
         for(var i = 0; i < ans.content.length; i++){
           this.spandata.push(ans.content[i].subOrders.length);
           for(var j=0 ; j<ans.content[i].subOrders.length ; j++){
@@ -129,14 +128,24 @@
             this.tableData.push(temp);
           }
         }
+        this.locatedata.push(0);
+        for(var i = 1; i< this.spandata.length;i++){
+          this.locatedata.push(this.locatedata[i-1]+this.spandata[i-1]);
+        }
         this.loading=false;
       }
     },
     mounted() {
+      this.spandata = [];
+      this.tableData = [];
+      this.locatedata = [];
       this.updateData();
     }
   };
 </script>
 
 <style>
+  .cell{
+    text-align: center;
+  }
 </style>

@@ -15,9 +15,9 @@
            <el-submenu index="2">
              <template slot="title">表单中心</template>
              <el-menu-item index="2-1">订单计划表</el-menu-item>
-             <el-menu-item index="2-2">订单—生产单关系表</el-menu-item>
-             <el-menu-item index="2-3">生产单</el-menu-item>
-             <el-menu-item index="2-4">生产单-资源关系表</el-menu-item>
+             <el-menu-item index="2-2">子订单-资源关系表</el-menu-item>
+             <el-menu-item index="2-3">子订单资源使用数表</el-menu-item>
+             <el-menu-item index="2-4">资源占用情况表</el-menu-item>
            </el-submenu>
            <el-submenu index="3">
              <template slot="title">控制中心</template>
@@ -73,6 +73,15 @@ export default {
         case "2-1":
           this.$router.push("/OPF");
           break;
+        case "2-2":
+          this.$router.push("/SOF");
+          break;
+        case "2-3":
+          this.$router.push("/RCF");
+          break;
+        case "2-4":
+          this.$router.push("/OCF");
+          break;
         case "3-2":
           this.$router.push("/resControll");
           break;
@@ -103,6 +112,15 @@ export default {
       }
       else if(url.indexOf("#/OPF") != -1){
         this.activeIndex = "2-1";
+      }
+      else if(url.indexOf("#/SOF") != -1){
+        this.activeIndex = "2-2";
+      }
+      else if(url.indexOf("#/RCF") != -1){
+        this.activeIndex = "2-3";
+      }
+      else if(url.indexOf("#/OCF") != -1){
+        this.activeIndex = "2-4";
       }
       else if(url.indexOf("#/resControll") != -1){
         this.activeIndex = "3-2";
@@ -158,6 +176,15 @@ export default {
       }
       else if(url.indexOf("OPF") != -1){
         this.activeIndex = "2-1";
+      }
+      else if(url.indexOf("SOF") != -1){
+        this.activeIndex = "2-2";
+      }
+      else if(url.indexOf("RCF") != -1){
+        this.activeIndex = "2-3";
+      }
+      else if(url.indexOf("OCF") != -1){
+        this.activeIndex = "2-4";
       }
       else if(url.indexOf("resControll") != -1){
         this.activeIndex = "3-2";

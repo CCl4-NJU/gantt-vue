@@ -7,6 +7,9 @@ import resource from '../components/views/resourceView.vue'
 import resControll from '../components/views/res_ControllView.vue'
 import mainView from '../components/views/mainView.vue'
 import OPF from '../components/views/orderPlanForm.vue'
+import SOF from '../components/views/subOForm.vue'
+import RCF from '../components/views/resCountForm.vue'
+import OCF from '../components/views/occupyForm.vue'
 import Config from '../components/views/Config.vue'
 
 Vue.use(Router)
@@ -48,6 +51,21 @@ export default new Router({
       path: '/OPF',
       name: 'OPF',
       component: OPF
+    },
+    {
+      path: '/SOF',
+      name: 'SOF',
+      component: SOF
+    },
+    {
+      path: '/RCF',
+      name: 'RCF',
+      component: RCF
+    },
+    {
+      path: '/OCF',
+      name: 'OCF',
+      component: OCF
     },
     {
       path: '/config',
