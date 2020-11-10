@@ -23,6 +23,7 @@
              <template slot="title">控制中心</template>
              <el-menu-item index="3-1">订单控制中心</el-menu-item>
              <el-menu-item index="3-2">人力及硬件控制中心</el-menu-item>
+             <el-menu-item index="3-3">排程设置</el-menu-item>
            </el-submenu>
          </el-menu>
       </el-col>
@@ -72,6 +73,9 @@ export default {
         case "3-2":
           this.$router.push("/resControll");
           break;
+        case "3-3":
+          this.$router.push("/config");
+          break;
         default:
           console.log("unlocated key: "+key);
       }
@@ -96,6 +100,9 @@ export default {
       }
       else if(url.indexOf("#/resControll") != -1){
         this.activeIndex = "3-2";
+      }
+      else if(url.indexOf("#/config") != -1){
+        this.activeIndex = "3-3";
       }
       else{
         this.activeIndex = "0";
@@ -146,6 +153,9 @@ export default {
       }
       else if(url.indexOf("resControll") != -1){
         this.activeIndex = "3-2";
+      }
+      else if(url.indexOf("config") != -1){
+        this.activeIndex = "3-3";
       }
       else{
         this.activeIndex = "0";

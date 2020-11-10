@@ -38,6 +38,7 @@
             <div class="btnBox">
               <el-button round>订单控制中心</el-button>
               <el-button round @click="btnClick('/resControll')">人力及硬件控制中心</el-button>
+              <el-button round @click="btnClick('/config')">排程设置</el-button>
             </div>
           </div>
         </el-col>
