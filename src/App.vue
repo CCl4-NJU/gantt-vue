@@ -69,6 +69,9 @@ export default {
         case "1-4":
           this.$router.push("/table");
           break;
+        case "2-1":
+          this.$router.push("/OPF");
+          break;
         case "3-2":
           this.$router.push("/resControll");
           break;
@@ -93,6 +96,9 @@ export default {
       }
       else if(url.indexOf("#/table") != -1){
         this.activeIndex = "1-4";
+      }
+      else if(url.indexOf("#/OPF") != -1){
+        this.activeIndex = "2-1";
       }
       else if(url.indexOf("#/resControll") != -1){
         this.activeIndex = "3-2";
@@ -131,7 +137,6 @@ export default {
     },
     changeIndex () {
       var url = this.$route.path;
-      
       if(url.indexOf("order") != -1){
         this.activeIndex = "1-1";
       }
@@ -143,6 +148,9 @@ export default {
       }
       else if(url.indexOf("table") != -1){
         this.activeIndex = "1-4";
+      }
+      else if(url.indexOf("OPF") != -1){
+        this.activeIndex = "2-1";
       }
       else if(url.indexOf("resControll") != -1){
         this.activeIndex = "3-2";

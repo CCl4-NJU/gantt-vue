@@ -6,6 +6,7 @@ import product from '../components/views/productView.vue'
 import resource from '../components/views/resourceView.vue'
 import resControll from '../components/views/res_ControllView.vue'
 import mainView from '../components/views/mainView.vue'
+import OPF from '../components/views/orderPlanForm.vue'
 
 Vue.use(Router)
 
@@ -41,6 +42,11 @@ export default new Router({
       path: '/resControll',
       name: 'resControll',
       component: resControll
+    },
+    {
+      path: '/OPF',
+      name: 'OPF',
+      component: OPF
     }
   ]
 })

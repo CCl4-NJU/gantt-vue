@@ -24,7 +24,7 @@
             <p>表单中心</p>
             <el-divider></el-divider>
             <div class="btnBox">
-              <el-button round>订单计划表</el-button>
+              <el-button round @click="btnClick('/OPF')">订单计划表</el-button>
               <el-button round>订单—生产单关系表</el-button>
               <el-button round>生产单</el-button>
               <el-button round>生产单-资源关系表</el-button>
