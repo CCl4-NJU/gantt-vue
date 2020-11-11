@@ -55,67 +55,68 @@
       },
       updateData(){
         this.loading = true;
-        // var ans = this.$parent.sendMessage('', "/order/plan", "get");
-        var ans = {
-          ret: true,
-          content: [
-            {
-              id: '413095',
-              subOrders: [
-                {
-                  id: '413095_1',
-                  startTime: '2020-11-03 07:00',
-                  finishTime: '2020-11-03 21:00'
-                },
-                {
-                  id: '413095_2',
-                  startTime: '2020-11-03 10:00',
-                  finishTime: '2020-11-03 17:00'
-                },
-                {
-                  id: '413095_3',
-                  startTime: '2020-11-03 19:00',
-                  finishTime: '2020-11-03 21:00'
-                },
-                {
-                  id: '413095_4',
-                  startTime: '2020-11-03 6:00',
-                  finishTime: '2020-11-03 9:00'
-                }
-              ]
-            },
-            {
-              id: '503952',
-              subOrders: [
-                {
-                  id: '503952_1',
-                  startTime: '2020-11-03 07:00',
-                  finishTime: '2020-11-03 21:00'
-                },
-                {
-                  id: '503952_2',
-                  startTime: '2020-11-03 10:00',
-                  finishTime: '2020-11-03 17:00'
-                },
-                {
-                  id: '503952_3',
-                  startTime: '2020-11-03 19:00',
-                  finishTime: '2020-11-03 21:00'
-                },
-                {
-                  id: '503952_4',
-                  startTime: '2020-11-03 6:00',
-                  finishTime: '2020-11-03 9:00'
-                },
-                {
-                  id: '503952_5',
-                  startTime: '2020-11-03 6:00',
-                  finishTime: '2020-11-03 9:00'
-                }
-              ]
-            }
-          ]
-        }
+        var ans = this.$parent.sendMessage('', "/order/plan", "get");
+        // var ans = {
+        //   ret: true,
+        //   content: [
+        //     {
+        //       id: '413095',
+        //       subOrders: [
+        //         {
+        //           id: '413095_1',
+        //           startTime: '2020-11-03 07:00',
+        //           finishTime: '2020-11-03 21:00'
+        //         },
+        //         {
+        //           id: '413095_2',
+        //           startTime: '2020-11-03 10:00',
+        //           finishTime: '2020-11-03 17:00'
+        //         },
+        //         {
+        //           id: '413095_3',
+        //           startTime: '2020-11-03 19:00',
+        //           finishTime: '2020-11-03 21:00'
+        //         },
+        //         {
+        //           id: '413095_4',
+        //           startTime: '2020-11-03 6:00',
+        //           finishTime: '2020-11-03 9:00'
+        //         }
+        //       ]
+        //     },
+        //     {
+        //       id: '503952',
+        //       subOrders: [
+        //         {
+        //           id: '503952_1',
+        //           startTime: '2020-11-03 07:00',
+        //           finishTime: '2020-11-03 21:00'
+        //         },
+        //         {
+        //           id: '503952_2',
+        //           startTime: '2020-11-03 10:00',
+        //           finishTime: '2020-11-03 17:00'
+        //         },
+        //         {
+        //           id: '503952_3',
+        //           startTime: '2020-11-03 19:00',
+        //           finishTime: '2020-11-03 21:00'
+        //         },
+        //         {
+        //           id: '503952_4',
+        //           startTime: '2020-11-03 6:00',
+        //           finishTime: '2020-11-03 9:00'
+        //         },
+        //         {
+        //           id: '503952_5',
+        //           startTime: '2020-11-03 6:00',
+        //           finishTime: '2020-11-03 9:00'
+        //         }
+        //       ]
+        //     }
+        //   ]
+        // }
+        
         for(var i = 0; i < ans.content.length; i++){
           this.spandata.push(ans.content[i].subOrders.length);
           for(var j=0 ; j<ans.content[i].subOrders.length ; j++){
