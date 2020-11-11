@@ -57,6 +57,7 @@
 </template>
 
 <script>
+  import axios from 'axios'
   export default {
     data() {
       return {
@@ -95,110 +96,45 @@
         this.spandata = [];
         this.tableData = [];
         this.locatedata = [];
-        var ans = this.$parent.sendMessage('', "/resource/occupyInfo/"+this.timeValue, "get");
-        // var ans = {
-        //   ret: true,
-        //   content: {
-        //     human: [
-        //       {
-        //         resourceId: "hr1",
-        //         resourceName: "1组-彭辉（5）",
-        //         occupyInfoList: [
-        //           {
-        //             startTime: "2020-11-03 13:00:00",
-        //             endTime: "2020-11-03 15:00:00",
-        //             orderId: "416153",
-        //             subOrderId: "416153_1"
-        //           },
-        //           {
-        //             startTime: "2020-11-03 15:00:00",
-        //             endTime: "2020-11-03 17:00:00",
-        //             orderId: "416153",
-        //             subOrderId: "416153_2"
-        //           },
-        //           {
-        //             startTime: "2020-11-04 07:00:00",
-        //             endTime: "2020-11-04 12:00:00",
-        //             orderId: "509867",
-        //             subOrderId: "509867_1"
-        //           }
-        //         ]
-        //       },
-        //     ],
-        //     device: [
-        //       {
-        //         resourceId: "line1",
-        //         resourceName: "1号生产线",
-        //         occupyInfoList: [
-        //           {
-        //             startTime: "2020-11-04 07:00:00",
-        //             endTime: "2020-11-04 12:00:00",
-        //             orderId: "416153",
-        //             subOrderId: "416153_1"
-        //           },
-        //           {
-        //             startTime: "2020-11-03 15:00:00",
-        //             endTime: "2020-11-03 17:00:00",
-        //             orderId: "416153",
-        //             subOrderId: "416153_2"
-        //           },
-        //           {
-        //             startTime: "2020-11-03 21:00:00",
-        //             endTime: "2020-11-03 23:00:00",
-        //             orderId: "379524",
-        //             subOrderId: "379524_1"
-        //           },
-        //           {
-        //             startTime: "2020-11-04 07:00:00",
-        //             endTime: "2020-11-04 12:00:00",
-        //             orderId: "509867",
-        //             subOrderId: "509867_1"
-        //           },
-        //           {
-        //             startTime: "2020-11-04 12:00:00",
-        //             endTime: "2020-11-04 18:00:00",
-        //             orderId: "509867",
-        //             subOrderId: "509867_2"
-        //           },
-        //         ]
-        //       }
-        //     ]
-        //   }
-        // }
-
-        for(var i = 0; i < ans.content.human.length; i++){
-          this.spandata.push(ans.content.human[i].occupyInfoList.length);
-          for(var j=0; j< ans.content.human[i].occupyInfoList.length; j++){
-            var temp = {
-              resId: ans.content.human[i].resourceId,
-              resName: ans.content.human[i].resourceName,
-              startTime: ans.content.human[i].occupyInfoList[j].startTime,
-              finishTime: ans.content.human[i].occupyInfoList[j].endTime,
-              subOrderId: ans.content.human[i].occupyInfoList[j].subOrderId,
-              orderId: ans.content.human[i].occupyInfoList[j].orderId
+        axios.get('/resource/occupyInfo/'+this.timeValue)
+          .then(request => {
+            var res = request.data;
+            if ( res.ret && res.content ){
+              for(var i = 0; i < res.content.human.length; i++){
+                this.spandata.push(res.content.human[i].occupyInfoList.length);
+                for(var j=0; j< res.content.human[i].occupyInfoList.length; j++){
+                  var temp = {
+                    resId: res.content.human[i].resourceId,
+                    resName: res.content.human[i].resourceName,
+                    startTime: res.content.human[i].occupyInfoList[j].startTime,
+                    finishTime: res.content.human[i].occupyInfoList[j].endTime,
+                    subOrderId: res.content.human[i].occupyInfoList[j].subOrderId,
+                    orderId: res.content.human[i].occupyInfoList[j].orderId
+                  }
+                  this.tableData.push(temp);
+                }
+              }
+              for(var i = 0; i < res.content.device.length; i++){
+                this.spandata.push(res.content.device[i].occupyInfoList.length);
+                for(var j=0; j< res.content.device[i].occupyInfoList.length; j++){
+                  var temp = {
+                    resId: res.content.device[i].resourceId,
+                    resName: res.content.device[i].resourceName,
+                    startTime: res.content.device[i].occupyInfoList[j].startTime,
+                    finishTime: res.content.device[i].occupyInfoList[j].endTime,
+                    subOrderId: res.content.device[i].occupyInfoList[j].subOrderId,
+                    orderId: res.content.device[i].occupyInfoList[j].orderId
+                  }
+                  this.tableData.push(temp);
+                }
+              }
+              this.locatedata.push(0);
+              for(var i = 1; i< this.spandata.length;i++){
+                this.locatedata.push(this.locatedata[i-1]+this.spandata[i-1]);
+              }
+              this.loading=false;
             }
-            this.tableData.push(temp);
-          }
-        }
-        for(var i = 0; i < ans.content.device.length; i++){
-          this.spandata.push(ans.content.device[i].occupyInfoList.length);
-          for(var j=0; j< ans.content.device[i].occupyInfoList.length; j++){
-            var temp = {
-              resId: ans.content.device[i].resourceId,
-              resName: ans.content.device[i].resourceName,
-              startTime: ans.content.device[i].occupyInfoList[j].startTime,
-              finishTime: ans.content.device[i].occupyInfoList[j].endTime,
-              subOrderId: ans.content.device[i].occupyInfoList[j].subOrderId,
-              orderId: ans.content.device[i].occupyInfoList[j].orderId
-            }
-            this.tableData.push(temp);
-          }
-        }
-        this.locatedata.push(0);
-        for(var i = 1; i< this.spandata.length;i++){
-          this.locatedata.push(this.locatedata[i-1]+this.spandata[i-1]);
-        }
-        this.loading=false;
+          });
       }
     },
     mounted() {

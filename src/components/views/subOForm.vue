@@ -32,6 +32,7 @@
 </template>
 
 <script>
+  import axios from 'axios'
   export default {
     data() {
       return {
@@ -60,278 +61,33 @@
       },
       updateData(){
         this.loading = true;
-        var ans = this.$parent.sendMessage('', "/order/plan/production", "get");
-        // var ans = {
-        //   ret: true,
-        //   content: [
-        //     {
-        //       id: '413095',
-        //       subOrders: [
-        //         {
-        //           id: '413095_1',
-        //           resources: [
-        //             {
-        //               id: "hr5",
-        //               name: "5组-童龄（5）"
-        //             },
-        //             {
-        //               id: "hr4",
-        //               name: "4组-梨花（6）"
-        //             },
-        //             {
-        //               id: "line4",
-        //               name: "车床4号"
-        //             },
-        //             {
-        //               id: "line5",
-        //               name: "压缩机5号"
-        //             },
-        //           ],
-        //           tasks: [
-        //             {
-        //               resourceId: "hr5",
-        //               resourceName: "5组-童龄（5）",
-        //               startTime: "2020-11-03 07:00",
-        //               endTime: "2020-11-03 15:00"
-        //             },
-        //             {
-        //               resourceId: "hr4",
-        //               resourceName: "4组-梨花（6）",
-        //               startTime: "2020-11-03 09:00",
-        //               endTime: "2020-11-03 11:00"
-        //             },
-        //             {
-        //               resourceId: "line4",
-        //               resourceName: "车床4号",
-        //               startTime: "2020-11-03 07:00",
-        //               endTime: "2020-11-03 15:00"
-        //             },
-        //             {
-        //               resourceId: "line5",
-        //               resourceName: "车床5号",
-        //               startTime: "2020-11-03 07:00",
-        //               endTime: "2020-11-03 15:00"
-        //             },
-        //           ]
-        //         },
-        //         {
-        //           id: '413095_2',
-        //           resources: [
-        //             {
-        //               id: "hr5",
-        //               name: "5组-童龄（5）"
-        //             },
-        //             {
-        //               id: "hr4",
-        //               name: "4组-梨花（6）"
-        //             },
-        //             {
-        //               id: "line4",
-        //               name: "车床4号"
-        //             },
-        //             {
-        //               id: "line5",
-        //               name: "压缩机5号"
-        //             },
-        //           ],
-        //           tasks: [
-        //             {
-        //               resourceId: "hr5",
-        //               resourceName: "5组-童龄（5）",
-        //               startTime: "2020-11-03 07:00",
-        //               endTime: "2020-11-03 15:00"
-        //             },
-        //             {
-        //               resourceId: "hr4",
-        //               resourceName: "4组-梨花（6）",
-        //               startTime: "2020-11-03 09:00",
-        //               endTime: "2020-11-03 11:00"
-        //             },
-        //             {
-        //               resourceId: "line4",
-        //               resourceName: "车床4号",
-        //               startTime: "2020-11-03 07:00",
-        //               endTime: "2020-11-03 15:00"
-        //             },
-        //             {
-        //               resourceId: "line5",
-        //               resourceName: "车床5号",
-        //               startTime: "2020-11-03 07:00",
-        //               endTime: "2020-11-03 15:00"
-        //             },
-        //           ]
-        //         },
-        //       ]
-        //     },
-        //     {
-        //       id: '503952',
-        //       subOrders: [
-        //         {
-        //           id: '50395_1',
-        //           resources: [
-        //             {
-        //               id: "hr5",
-        //               name: "5组-童龄（5）"
-        //             },
-        //             {
-        //               id: "hr4",
-        //               name: "4组-梨花（6）"
-        //             },
-        //             {
-        //               id: "line4",
-        //               name: "车床4号"
-        //             },
-        //             {
-        //               id: "line5",
-        //               name: "压缩机5号"
-        //             },
-        //           ],
-        //           tasks: [
-        //             {
-        //               resourceId: "hr5",
-        //               resourceName: "5组-童龄（5）",
-        //               startTime: "2020-11-03 07:00",
-        //               endTime: "2020-11-03 15:00"
-        //             },
-        //             {
-        //               resourceId: "hr4",
-        //               resourceName: "4组-梨花（6）",
-        //               startTime: "2020-11-03 09:00",
-        //               endTime: "2020-11-03 11:00"
-        //             },
-        //             {
-        //               resourceId: "line4",
-        //               resourceName: "车床4号",
-        //               startTime: "2020-11-03 07:00",
-        //               endTime: "2020-11-03 15:00"
-        //             },
-        //             {
-        //               resourceId: "line5",
-        //               resourceName: "车床5号",
-        //               startTime: "2020-11-03 07:00",
-        //               endTime: "2020-11-03 15:00"
-        //             },
-        //           ]
-        //         },
-        //         {
-        //           id: '50395_2',
-        //           resources: [
-        //             {
-        //               id: "hr5",
-        //               name: "5组-童龄（5）"
-        //             },
-        //             {
-        //               id: "hr4",
-        //               name: "4组-梨花（6）"
-        //             },
-        //             {
-        //               id: "line4",
-        //               name: "车床4号"
-        //             },
-        //             {
-        //               id: "line5",
-        //               name: "压缩机5号"
-        //             },
-        //           ],
-        //           tasks: [
-        //             {
-        //               resourceId: "hr5",
-        //               resourceName: "5组-童龄（5）",
-        //               startTime: "2020-11-03 07:00",
-        //               endTime: "2020-11-03 15:00"
-        //             },
-        //             {
-        //               resourceId: "hr4",
-        //               resourceName: "4组-梨花（6）",
-        //               startTime: "2020-11-03 09:00",
-        //               endTime: "2020-11-03 11:00"
-        //             },
-        //             {
-        //               resourceId: "line4",
-        //               resourceName: "车床4号",
-        //               startTime: "2020-11-03 07:00",
-        //               endTime: "2020-11-03 15:00"
-        //             },
-        //             {
-        //               resourceId: "line5",
-        //               resourceName: "车床5号",
-        //               startTime: "2020-11-03 07:00",
-        //               endTime: "2020-11-03 15:00"
-        //             },
-        //           ]
-        //         },
-        //         {
-        //           id: '50395_3',
-        //           resources: [
-        //             {
-        //               id: "hr5",
-        //               name: "5组-童龄（5）"
-        //             },
-        //             {
-        //               id: "hr4",
-        //               name: "4组-梨花（6）"
-        //             },
-        //             {
-        //               id: "line4",
-        //               name: "车床4号"
-        //             },
-        //             {
-        //               id: "line5",
-        //               name: "压缩机5号"
-        //             },
-        //           ],
-        //           tasks: [
-        //             {
-        //               resourceId: "hr5",
-        //               resourceName: "5组-童龄（5）",
-        //               startTime: "2020-11-03 07:00",
-        //               endTime: "2020-11-03 15:00"
-        //             },
-        //             {
-        //               resourceId: "hr4",
-        //               resourceName: "4组-梨花（6）",
-        //               startTime: "2020-11-03 09:00",
-        //               endTime: "2020-11-03 11:00"
-        //             },
-        //             {
-        //               resourceId: "line4",
-        //               resourceName: "车床4号",
-        //               startTime: "2020-11-03 07:00",
-        //               endTime: "2020-11-03 15:00"
-        //             },
-        //             {
-        //               resourceId: "line5",
-        //               resourceName: "车床5号",
-        //               startTime: "2020-11-03 07:00",
-        //               endTime: "2020-11-03 15:00"
-        //             },
-        //           ]
-        //         },
-        //       ]
-        //     }
-        //   ]
-        // }
-        
-        for(var i = 0; i < ans.content.length; i++){
-          for(var j=0 ; j<ans.content[i].subOrders.length ; j++){
-            this.spandata.push(ans.content[i].subOrders[j].resources.length);
-            for(var k=0; k< ans.content[i].subOrders[j].resources.length; k++){
-              var temp = {
-                id: ans.content[i].subOrders[j].id,
-                resID: ans.content[i].subOrders[j].resources[k].id,
-                resName: ans.content[i].subOrders[j].resources[k].name,
-                startTime: ans.content[i].subOrders[j].tasks[k].startTime,
-                finishTime: ans.content[i].subOrders[j].tasks[k].endTime,
+
+        axios.get('/order/plan/production')
+          .then(request => {
+            var res = request.data
+            if ( res.ret && res.content ){
+              for(var i = 0; i < res.content.length; i++){
+                for(var j=0 ; j<res.content[i].subOrders.length ; j++){
+                  this.spandata.push(res.content[i].subOrders[j].resources.length);
+                  for(var k=0; k< res.content[i].subOrders[j].resources.length; k++){
+                    var temp = {
+                      id: res.content[i].subOrders[j].id,
+                      resID: res.content[i].subOrders[j].resources[k].id,
+                      resName: res.content[i].subOrders[j].resources[k].name,
+                      startTime: res.content[i].subOrders[j].tasks[k].startTime,
+                      finishTime: res.content[i].subOrders[j].tasks[k].endTime,
+                    }
+                    this.tableData.push(temp);
+                  }
+                }
               }
-              this.tableData.push(temp);
+              this.locatedata.push(0);
+              for(var i = 1; i< this.spandata.length;i++){
+                this.locatedata.push(this.locatedata[i-1]+this.spandata[i-1]);
+              }
+              this.loading=false;
             }
-          }
-        }
-        this.locatedata.push(0);
-        for(var i = 1; i< this.spandata.length;i++){
-          this.locatedata.push(this.locatedata[i-1]+this.spandata[i-1]);
-        }
-        this.loading=false;
+          });
       }
     },
     mounted() {
