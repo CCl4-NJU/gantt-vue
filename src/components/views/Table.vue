@@ -288,13 +288,22 @@ export default {
     }
   },
   mounted () {
+    // this.dateRange = [
+    //   this.formatDate(Date.now()),
+    //   this.formatDate(Date.now())
+    // ]
     this.dateRange = [
-      this.formatDate(Date.now()),
-      this.formatDate(Date.now())
+      '2018-11-04',
+      '2018-11-05'
     ]
+
+    // this.monthRange = [
+    //   this.formatDate(Date.now()),
+    //   this.formatDate(Date.now())
+    // ]
     this.monthRange = [
-      this.formatDate(Date.now()),
-      this.formatDate(Date.now())
+      '2018-10-01',
+      '2018-11-01'
     ]
     this.start_date = this.dateRange[0];
     this.end_date = this.dateRange[1];
