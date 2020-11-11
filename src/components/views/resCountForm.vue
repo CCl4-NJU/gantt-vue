@@ -62,15 +62,22 @@
             var res = request.data
             if ( res.ret && res.content ){
               for(var i = 0; i < res.content.length; i++){
-                this.spandata.push(res.content[i].subOrders.length+1);
-                var res = [];
+                if(res.content[i].subOrders.length != 0){
+                  this.spandata.push(res.content[i].subOrders.length+1);
+                }
+                else{
+                  console.error("订单信息错误，没有子订单");
+                  console.error("订单ID："+res.content[i].id);
+                  continue;
+                }
+                var collectRes = [];
                 var subRes = [];
                 var timeC = 0;
                 var subtimeC = 0;
                 for(var j=0 ; j<res.content[i].subOrders.length ; j++){
                   for(var k=0; k< res.content[i].subOrders[j].resources.length; k++){
-                    if(res.indexOf(res.content[i].subOrders[j].resources[k].id) == -1){
-                      res.push(res.content[i].subOrders[j].resources[k].id);
+                    if(collectRes.indexOf(res.content[i].subOrders[j].resources[k].id) == -1){
+                      collectRes.push(res.content[i].subOrders[j].resources[k].id);
                     }
                     subRes.push(res.content[i].subOrders[j].resources[k].id);
                     var sdate = new Date(res.content[i].subOrders[j].tasks[k].startTime.replace(/-/g,"/"));
@@ -92,11 +99,11 @@
                 var temp = {
                   id: res.content[i].id,
                   subID: "合计",
-                  resCount: res.length,
+                  resCount: collectRes.length,
                   timeCount: timeC,
                 }
                 this.tableData.push(temp);
-                res = [];
+                collectRes = [];
                 timeC = 0;
               }
               this.locatedata.push(0);
@@ -108,6 +115,7 @@
           });
 
       }
+
     },
     mounted() {
       this.spandata = [];
@@ -115,7 +123,7 @@
       this.locatedata = [];
       this.updateData();
     }
-  };
+  }
 </script>
 
 <style>

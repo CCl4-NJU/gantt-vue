@@ -62,7 +62,14 @@
             var res = request.data
             if ( res.ret && res.content ){
               for(var i = 0; i < res.content.length; i++){
-                this.spandata.push(res.content[i].subOrders.length);
+                if(res.content[i].subOrders.length != 0){
+                  this.spandata.push(res.content[i].subOrders.length);
+                }
+                else{
+                  console.error("订单信息错误，没有子订单");
+                  console.error("订单ID："+res.content[i].id);
+                  continue;
+                }
                 for(var j=0 ; j<res.content[i].subOrders.length ; j++){
                   var temp = {
                     id: res.content[i].id,

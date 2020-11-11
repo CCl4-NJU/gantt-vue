@@ -68,7 +68,14 @@
             if ( res.ret && res.content ){
               for(var i = 0; i < res.content.length; i++){
                 for(var j=0 ; j<res.content[i].subOrders.length ; j++){
-                  this.spandata.push(res.content[i].subOrders[j].resources.length);
+                  if(res.content[i].subOrders[j].resources.length != 0){
+                    this.spandata.push(res.content[i].subOrders[j].resources.length);
+                  }
+                  else{
+                    console.error("订单信息错误，子订单没有资源");
+                    console.error("子订单ID："+res.content[i].subOrders[j].id);
+                    continue;
+                  }
                   for(var k=0; k< res.content[i].subOrders[j].resources.length; k++){
                     var temp = {
                       id: res.content[i].subOrders[j].id,

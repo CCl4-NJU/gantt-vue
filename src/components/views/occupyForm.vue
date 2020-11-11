@@ -101,7 +101,22 @@
             var res = request.data;
             if ( res.ret && res.content ){
               for(var i = 0; i < res.content.human.length; i++){
-                this.spandata.push(res.content.human[i].occupyInfoList.length);
+                if(res.content.human[i].occupyInfoList.length != 0){
+                  this.spandata.push(res.content.human[i].occupyInfoList.length);
+                }
+                else{
+                  this.spandata.push(1);
+                  var temp = {
+                    resId: res.content.human[i].resourceId,
+                    resName: res.content.human[i].resourceName,
+                    startTime: "未分配任务",
+                    finishTime: "",
+                    subOrderId: "",
+                    orderId: ""
+                  }
+                  this.tableData.push(temp);
+                  continue;
+                }
                 for(var j=0; j< res.content.human[i].occupyInfoList.length; j++){
                   var temp = {
                     resId: res.content.human[i].resourceId,
@@ -115,7 +130,22 @@
                 }
               }
               for(var i = 0; i < res.content.device.length; i++){
-                this.spandata.push(res.content.device[i].occupyInfoList.length);
+                if(res.content.device[i].occupyInfoList.length != 0){
+                  this.spandata.push(res.content.device[i].occupyInfoList.length);
+                }
+                else{
+                  this.spandata.push(1);
+                  var temp = {
+                    resId: res.content.device[i].resourceId,
+                    resName: res.content.device[i].resourceName,
+                    startTime: "未分配任务",
+                    finishTime: "",
+                    subOrderId: "",
+                    orderId: ""
+                  }
+                  this.tableData.push(temp);
+                  continue;
+                }
                 for(var j=0; j< res.content.device[i].occupyInfoList.length; j++){
                   var temp = {
                     resId: res.content.device[i].resourceId,
