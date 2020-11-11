@@ -95,76 +95,76 @@
         this.spandata = [];
         this.tableData = [];
         this.locatedata = [];
-        // var ans = this.$parent.sendMessage('', "/resource/occupyInfo/"+this.timeValue, "get");
-        var ans = {
-          ret: true,
-          content: {
-            human: [
-              {
-                resourceId: "hr1",
-                resourceName: "1组-彭辉（5）",
-                occupyInfoList: [
-                  {
-                    startTime: "2020-11-03 13:00:00",
-                    endTime: "2020-11-03 15:00:00",
-                    orderId: "416153",
-                    subOrderId: "416153_1"
-                  },
-                  {
-                    startTime: "2020-11-03 15:00:00",
-                    endTime: "2020-11-03 17:00:00",
-                    orderId: "416153",
-                    subOrderId: "416153_2"
-                  },
-                  {
-                    startTime: "2020-11-04 07:00:00",
-                    endTime: "2020-11-04 12:00:00",
-                    orderId: "509867",
-                    subOrderId: "509867_1"
-                  }
-                ]
-              },
-            ],
-            device: [
-              {
-                resourceId: "line1",
-                resourceName: "1号生产线",
-                occupyInfoList: [
-                  {
-                    startTime: "2020-11-04 07:00:00",
-                    endTime: "2020-11-04 12:00:00",
-                    orderId: "416153",
-                    subOrderId: "416153_1"
-                  },
-                  {
-                    startTime: "2020-11-03 15:00:00",
-                    endTime: "2020-11-03 17:00:00",
-                    orderId: "416153",
-                    subOrderId: "416153_2"
-                  },
-                  {
-                    startTime: "2020-11-03 21:00:00",
-                    endTime: "2020-11-03 23:00:00",
-                    orderId: "379524",
-                    subOrderId: "379524_1"
-                  },
-                  {
-                    startTime: "2020-11-04 07:00:00",
-                    endTime: "2020-11-04 12:00:00",
-                    orderId: "509867",
-                    subOrderId: "509867_1"
-                  },
-                  {
-                    startTime: "2020-11-04 12:00:00",
-                    endTime: "2020-11-04 18:00:00",
-                    orderId: "509867",
-                    subOrderId: "509867_2"
-                  },
-                ]
-              }
-            ]
-          }
-        }
+        var ans = this.$parent.sendMessage('', "/resource/occupyInfo/"+this.timeValue, "get");
+        // var ans = {
+        //   ret: true,
+        //   content: {
+        //     human: [
+        //       {
+        //         resourceId: "hr1",
+        //         resourceName: "1组-彭辉（5）",
+        //         occupyInfoList: [
+        //           {
+        //             startTime: "2020-11-03 13:00:00",
+        //             endTime: "2020-11-03 15:00:00",
+        //             orderId: "416153",
+        //             subOrderId: "416153_1"
+        //           },
+        //           {
+        //             startTime: "2020-11-03 15:00:00",
+        //             endTime: "2020-11-03 17:00:00",
+        //             orderId: "416153",
+        //             subOrderId: "416153_2"
+        //           },
+        //           {
+        //             startTime: "2020-11-04 07:00:00",
+        //             endTime: "2020-11-04 12:00:00",
+        //             orderId: "509867",
+        //             subOrderId: "509867_1"
+        //           }
+        //         ]
+        //       },
+        //     ],
+        //     device: [
+        //       {
+        //         resourceId: "line1",
+        //         resourceName: "1号生产线",
+        //         occupyInfoList: [
+        //           {
+        //             startTime: "2020-11-04 07:00:00",
+        //             endTime: "2020-11-04 12:00:00",
+        //             orderId: "416153",
+        //             subOrderId: "416153_1"
+        //           },
+        //           {
+        //             startTime: "2020-11-03 15:00:00",
+        //             endTime: "2020-11-03 17:00:00",
+        //             orderId: "416153",
+        //             subOrderId: "416153_2"
+        //           },
+        //           {
+        //             startTime: "2020-11-03 21:00:00",
+        //             endTime: "2020-11-03 23:00:00",
+        //             orderId: "379524",
+        //             subOrderId: "379524_1"
+        //           },
+        //           {
+        //             startTime: "2020-11-04 07:00:00",
+        //             endTime: "2020-11-04 12:00:00",
+        //             orderId: "509867",
+        //             subOrderId: "509867_1"
+        //           },
+        //           {
+        //             startTime: "2020-11-04 12:00:00",
+        //             endTime: "2020-11-04 18:00:00",
+        //             orderId: "509867",
+        //             subOrderId: "509867_2"
+        //           },
+        //         ]
+        //       }
+        //     ]
+        //   }
+        // }
 
         for(var i = 0; i < ans.content.human.length; i++){
           this.spandata.push(ans.content.human[i].occupyInfoList.length);
