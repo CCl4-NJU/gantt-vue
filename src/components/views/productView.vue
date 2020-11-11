@@ -239,10 +239,15 @@ export default {
   },
   mounted () {
     this.timeValue = this.$route.query.date;
+    
     this.dateRange = [
-      this.formatDate(Date.now()),
-      this.formatDate(Date.now())
+      '2018-11-04',
+      '2018-11-05'
     ]
+    // this.dateRange = [
+    //   this.formatDate(Date.now()),
+    //   this.formatDate(Date.now())
+    // ]
 
     // this.pdtTasks = {data: [], links: []};
     // this.pdtTasks_day = {data: [], links: []};
