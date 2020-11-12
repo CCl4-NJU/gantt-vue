@@ -294,7 +294,6 @@ var _index;
           console.log(res);
           if ( res.ret ){
             var id = res.content.id;
-            id = id + that.formatDate(Date.now())
 
             that.tableData[index].children.push({
               id: id,
@@ -344,8 +343,8 @@ var _index;
             that.tableData[that.radio-1].children[childrenIndex].name = that.editForm.name;
             that.tableData[that.radio-1].children[childrenIndex].number = that.editForm.number;
             that.tableData[that.radio-1].children[childrenIndex].shift = that.shiftInfo[that.shiftRadio-1];
-          
-            
+
+
             that.$message({
               type: 'success',
               message: '编辑成功！'
@@ -355,7 +354,7 @@ var _index;
               type: 'error',
               message: res.content
             })
-          }          
+          }
         })
         .catch(function(err){
           this.$message({
