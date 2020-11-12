@@ -144,7 +144,7 @@ export default {
   },
   mounted () {
     // this.timeValue = this.formatDate(Date.now());
-    this.timeValue = '2018-11-04';
+    this.timeValue = '2018-11-13';
     this.getOrderInfo();
   }
 }

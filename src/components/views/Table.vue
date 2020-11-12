@@ -293,8 +293,8 @@ export default {
     //   this.formatDate(Date.now())
     // ]
     this.dateRange = [
-      '2018-11-04',
-      '2018-11-05'
+      '2018-11-13',
+      '2018-11-14'
     ]
 
     // this.monthRange = [
@@ -302,8 +302,8 @@ export default {
     //   this.formatDate(Date.now())
     // ]
     this.monthRange = [
-      '2018-10-01',
-      '2018-11-01'
+      '2018-11-01',
+      '2018-12-01'
     ]
     this.start_date = this.dateRange[0];
     this.end_date = this.dateRange[1];

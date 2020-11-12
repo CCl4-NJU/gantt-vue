@@ -236,15 +236,15 @@ export default {
   },
   mounted () {
     // this.timeValue = this.formatDate(Date.now());
-    this.timeValue = '2018-11-04';
+    this.timeValue = '2018-11-13';
     
     // this.dateRange = [
     //   this.formatDate(Date.now()),
     //   this.formatDate(Date.now())
     // ]
     this.dateRange = [
-      '2018-11-04',
-      '2018-11-05'
+      '2018-11-13',
+      '2018-11-14'
     ]
 
     this.getResourceInfo(true);

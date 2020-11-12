@@ -168,7 +168,7 @@
       }
     },
     mounted() {
-      this.timeValue = "2018-11-04"
+      this.timeValue = "2018-11-13"
       this.updateData();
     }
   };

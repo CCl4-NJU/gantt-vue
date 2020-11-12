@@ -241,8 +241,8 @@ export default {
     this.timeValue = this.$route.query.date;
     
     this.dateRange = [
-      '2018-11-04',
-      '2018-11-05'
+      '2018-11-13',
+      '2018-11-14'
     ]
     // this.dateRange = [
     //   this.formatDate(Date.now()),
