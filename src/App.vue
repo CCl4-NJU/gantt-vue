@@ -62,7 +62,7 @@ export default {
           break;
         case "1-2":
           //为了能够传参，为实现 resourceView 点击甘特图跳转做铺垫
-          this.$router.push({path:"/product", query:{id: '3005837', date: "2018-11-05"}});
+          this.$router.push({path:"/product", query:{id: '3005837', date: "2018-11-13"}});
           break;
         case "1-3":
           this.$router.push("/resource");
