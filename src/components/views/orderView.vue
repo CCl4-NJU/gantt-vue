@@ -18,7 +18,7 @@
       <el-col :span="12" id="barCol" style="">
         <div id="progress">
           <p>按期交货率</p>
-          <p class="smallFont" id="ddl">{{timeValue}}</p>
+          <p class="smallFont" id="ddl">截至{{timeValue}}</p>
           <el-progress :text-inside="true" :stroke-width="26" :percentage="percentage" :status="status"></el-progress>
         </div>
       </el-col>
