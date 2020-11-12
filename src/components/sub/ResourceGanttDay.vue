@@ -26,7 +26,7 @@ export default {
     gantt.config.columns = [//设置列
       {name:"resource", label:"资源",    width:"*", align:"center"},
       {name:"percent",  label:"使用率",  width:"*", align:"center" },
-      {name:"text",  label:"产品",    width:"*", align:"center", tree:true}
+      {name:"text",  label:"产品",    width:"150", align:"center", tree:true}
     ];
     gantt.plugins({
       tooltip: true,//鼠标划过任务是否显示明细
