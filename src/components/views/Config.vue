@@ -7,7 +7,7 @@
             v-model="timeValue"
             align="right"
             type="date"
-            placeholder="选择当前时间"
+            placeholder="选择排程起始时间"
             value-format="yyyy-MM-dd"
             @change="timeChange">
           </el-date-picker>
