@@ -304,10 +304,15 @@ var _index;
               shift: that.shiftInfo[shiftIndex],
               hr: hr
             })
+
+            that.$message({
+              type: 'success',
+              message: '添加成功！'
+            })
           } else{
             that.$message({
               type: 'error',
-              message: res.msg
+              message: res.content
             })
           }
         })
@@ -339,10 +344,16 @@ var _index;
             that.tableData[that.radio-1].children[childrenIndex].name = that.editForm.name;
             that.tableData[that.radio-1].children[childrenIndex].number = that.editForm.number;
             that.tableData[that.radio-1].children[childrenIndex].shift = that.shiftInfo[that.shiftRadio-1];
+          
+            
+            that.$message({
+              type: 'success',
+              message: '编辑成功！'
+            })
           } else{
             that.$message({
               type: 'error',
-              message: res.msg
+              message: res.content
             })
           }          
         })
