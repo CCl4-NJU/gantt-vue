@@ -304,6 +304,11 @@ var _index;
               shift: that.shiftInfo[shiftIndex],
               hr: hr
             })
+          } else{
+            that.$message({
+              type: 'error',
+              message: res.msg
+            })
           }
         })
         .catch(function(err){
@@ -326,12 +331,20 @@ var _index;
         }
         axios.post('/updateResource', changeItem)
         .then(request => {
-          var childrenIndex = that.radio==1 ?
-          that.getChildrenIndex(_index, true) :that.getChildrenIndex(_index, false);
+          var res = request.data;
+          if( res.ret ){
+            var childrenIndex = that.radio==1 ?
+            that.getChildrenIndex(_index, true) :that.getChildrenIndex(_index, false);
 
-          that.tableData[that.radio-1].children[childrenIndex].name = that.editForm.name;
-          that.tableData[that.radio-1].children[childrenIndex].number = that.editForm.number;
-          that.tableData[that.radio-1].children[childrenIndex].shift = that.shiftInfo[that.shiftRadio-1];
+            that.tableData[that.radio-1].children[childrenIndex].name = that.editForm.name;
+            that.tableData[that.radio-1].children[childrenIndex].number = that.editForm.number;
+            that.tableData[that.radio-1].children[childrenIndex].shift = that.shiftInfo[that.shiftRadio-1];
+          } else{
+            that.$message({
+              type: 'error',
+              message: res.msg
+            })
+          }          
         })
         .catch(function(err){
           this.$message({
@@ -372,7 +385,7 @@ var _index;
             } else{
               that.$message({
                 type: 'error',
-                message: '删除失败!'
+                message: res.msg
               })
             }
           })
