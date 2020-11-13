@@ -182,7 +182,7 @@ export default {
           this.reload("day")
         })
         .catch(function (error) {
-          that.pdtTasks = {data: [], links: []};
+          that.pdtTasks_day = {data: [], links: []};
           that.reload("day");
         });
       }
@@ -198,6 +198,10 @@ export default {
         case "day":
           document.getElementById("normalPicker").style.display = "none";
           document.getElementById("rangePicker").style.display = "block";
+          //bug
+          if(this.pdtTasks_day.data.length==0){
+            this.pdtTasks_day = this.pdtTasks;
+          }
           this.reload("day");
           break;
       }
