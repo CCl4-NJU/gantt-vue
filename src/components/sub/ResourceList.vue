@@ -52,17 +52,14 @@
   <el-dialog
     center
     title="新增"
-    :visible.sync="addFormVisible"
-  >
+    :visible.sync="addFormVisible">
     <el-form
       :model="addForm"
       :label-position="'left'"
-      ref="addForm"
-    >
+      ref="addForm">
       <el-form-item
           label="资源类型"
-          :label-width="formLabelWidth"
-        >
+          :label-width="formLabelWidth">
         <template>
             <el-radio
               v-model="radio"
@@ -72,46 +69,46 @@
               v-model="radio"
               :label="2"
             >硬件资源</el-radio>
-          </template>
+        </template>
       </el-form-item>
       <el-form-item
         label="资源名称"
-        :label-width="formLabelWidth"
-      >
+        :label-width="formLabelWidth">
         <el-input
           v-model="addForm.name"
-          autocomplete="off"
-        ></el-input>
+          autocomplete="off">
+        </el-input>
       </el-form-item>
       <el-form-item
         label="资源数量"
-        :label-width="formLabelWidth"
-      >
+        :label-width="formLabelWidth">
         <el-input
           v-model="addForm.number"
-          autocomplete="off"
-        ></el-input>
+          autocomplete="off">
+        </el-input>
       </el-form-item>
       <el-form-item
-          label="班组信息"
-          :label-width="formLabelWidth"
-        >
+        label="班组信息"
+        :label-width="formLabelWidth">
         <template>
-            <el-radio
-              v-model="shiftRadio"
-              :label="1"
-            >全天</el-radio>
-            <el-radio
-              v-model="shiftRadio"
-              :label="2"
-              :disabled="this.radio==2"
-            >早班</el-radio>
-            <el-radio
-              v-model="shiftRadio"
-              :label="3"
-              :disabled="this.radio==2"
-            >晚班</el-radio>
-          </template>
+          <el-radio
+            v-model="shiftRadio"
+            :label="1"
+            v-if="this.radio==2">全天</el-radio>
+          <el-select v-model="shiftRadio" placeholder="请选择" v-if="this.radio==1">
+            <el-option-group
+              v-for="group in options"
+              :key="group.label"
+              :label="group.label">
+              <el-option
+              v-for="item in group.options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+              </el-option>
+            </el-option-group>
+          </el-select>
+        </template>
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -127,67 +124,62 @@
   <el-dialog
     center
     title="编辑"
-    :visible.sync="editFormVisible"
-  >
+    :visible.sync="editFormVisible">
     <el-form
       :model="editForm"
-      ref="editForm"
-    >
+      ref="editForm">
       <el-form-item
-          label="资源类型"
-          :label-width="formLabelWidth"
-        >
+        label="资源类型"
+        :label-width="formLabelWidth">
         <template>
-            <el-radio
-              v-model="radio"
-              disabled
-              :label="1"
-            >人力资源</el-radio>
-            <el-radio
-              v-model="radio"
-              disabled
-              :label="2"
-            >硬件资源</el-radio>
-          </template>
+          <el-radio
+            v-model="radio"
+            disabled
+            :label="1"
+          >人力资源</el-radio>
+          <el-radio
+            v-model="radio"
+            disabled
+            :label="2"
+          >硬件资源</el-radio>
+        </template>
       </el-form-item>
       <el-form-item
         label="资源名称"
-        :label-width="formLabelWidth"
-      >
+        :label-width="formLabelWidth">
         <el-input
           v-model="editForm.name"
-          autocomplete="off"
-        ></el-input>
+          autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item
         label="资源数量"
-        :label-width="formLabelWidth"
-      >
+        :label-width="formLabelWidth">
         <el-input
           v-model="editForm.number"
-          autocomplete="off"
-        ></el-input>
+          autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item
-          label="班组信息"
-          :label-width="formLabelWidth"
-        >
+        label="班组信息"
+        :label-width="formLabelWidth">
         <template>
-            <el-radio
-              v-model="shiftRadio"
-              :label="1"
-            >全天</el-radio>
-            <el-radio
-              v-model="shiftRadio"
-              :label="2"
-              :disabled="this.radio==2"
-            >早班</el-radio>
-            <el-radio
-              v-model="shiftRadio"
-              :label="3"
-              :disabled="this.radio==2"
-            >晚班</el-radio>
-          </template>
+          <el-radio
+            v-model="shiftRadio"
+            :label="1"
+            v-if="this.radio==2">全天</el-radio>
+          <el-select v-model="shiftRadio" placeholder="请选择" v-if="this.radio==1">
+            <el-option-group
+              v-for="group in options"
+              :key="group.label"
+              :label="group.label">
+              <el-option
+              v-for="item in group.options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+              </el-option>
+            </el-option-group>
+          </el-select>
+        </template>
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -220,8 +212,8 @@ var _index;
 
         radio: 1,//随点击位置而变，根据radio可以获取到人力资源或硬件资源的children数据
 
-        shiftRadio: 1,
-        shiftInfo: ['全天','早班','晚班'],
+        shiftRadio: '',
+        shiftInfo: ['全天','早班(7-19)','晚班(19-7)','早班(7-15)','中班(15-23)','晚班(23-7)'],
 
         tableData: [{
           id: 1,
@@ -235,14 +227,36 @@ var _index;
           name: '硬件资源',
           number: '',
           children: []
-        }]
+        }],
+        options: [{
+          label: '两班倒',
+          options: [{
+          value: '2',
+          label: '早班(7-19)'
+          }, {
+          value: '3',
+          label: '晚班(19-7)'
+          }]
+        }, {
+          label: '三班倒',
+          options: [{
+          value: '4',
+          label: '早班(7-15)'
+          }, {
+          value: '5',
+          label: '中班(15-23)'
+          }, {
+          value: '6',
+          label: '晚班(23-7)'
+          },]
+        }],
       }
     },
     methods: {
       handleAdd() {
         this.addFormVisible = true;
         this.radio = 1;
-        this.shiftRadio = 1;
+        this.shiftRadio = '';
         this.addForm = {
           name: '',
           number: ''
@@ -256,17 +270,12 @@ var _index;
 
         if(row.hr){
           this.radio = 1;
+          this.shiftRadio = '';
         } else{
           this.radio = 2;
+          this.shiftRadio = 1;
         }
 
-        if(row.shift=='全天'){
-          this.shiftRadio = 1;
-        } else if(row.shift=='早班'){
-          this.shiftRadio = 2;
-        } else{
-          this.shiftRadio = 3;
-        }
 
         this.editId = row.id;
         // console.log(index)

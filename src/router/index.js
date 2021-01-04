@@ -5,6 +5,7 @@ import order from '../components/views/orderView.vue'
 import product from '../components/views/productView.vue'
 import resource from '../components/views/resourceView.vue'
 import resControll from '../components/views/res_ControllView.vue'
+import odControll from '../components/views/order_ControllView.vue'
 import mainView from '../components/views/mainView.vue'
 import OPF from '../components/views/orderPlanForm.vue'
 import SOF from '../components/views/subOForm.vue'
@@ -46,6 +47,11 @@ export default new Router({
       path: '/resControll',
       name: 'resControll',
       component: resControll
+    },
+    {
+      path: '/odControll',
+      name: 'odControll',
+      component: odControll
     },
     {
       path: '/OPF',

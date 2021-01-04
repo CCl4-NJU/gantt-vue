@@ -98,7 +98,7 @@
                 }
                 var temp = {
                   id: res.content[i].id,
-                  subID: "合计",
+                  subID: "合计（去重）",
                   resCount: collectRes.length,
                   timeCount: timeC,
                 }

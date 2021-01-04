@@ -82,6 +82,9 @@ export default {
         case "2-4":
           this.$router.push("/OCF");
           break;
+        case "3-1":
+          this.$router.push("/odControll");
+          break;
         case "3-2":
           this.$router.push("/resControll");
           break;
@@ -121,6 +124,9 @@ export default {
       }
       else if(url.indexOf("#/OCF") != -1){
         this.activeIndex = "2-4";
+      }
+      else if(url.indexOf("#/odControll") != -1){
+        this.activeIndex = "3-1";
       }
       else if(url.indexOf("#/resControll") != -1){
         this.activeIndex = "3-2";
@@ -185,6 +191,9 @@ export default {
       }
       else if(url.indexOf("OCF") != -1){
         this.activeIndex = "2-4";
+      }
+      else if(url.indexOf("odControll") != -1){
+        this.activeIndex = "3-1";
       }
       else if(url.indexOf("resControll") != -1){
         this.activeIndex = "3-2";
