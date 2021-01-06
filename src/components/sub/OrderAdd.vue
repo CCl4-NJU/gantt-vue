@@ -147,36 +147,21 @@
         };
 
         var se = this;
-        var success = null;
-        var newId = '';
-        try{
-          axios.post('/controll/order', data)
-            .then(request => {
-              var res = request.data;
-              console.log(res);
-              if ( res.ret ){
-                success = true;
-                newId = res.content;
-              }
-              else{
-                success = false;
-              }
+        axios.post('/controll/order', data)
+          .then(request => {
+            var res = request.data;
+            console.log(res);
+            var explain = '';
+            if ( res.ret ){
+              explain = '添加成功，生成的订单号为'+res.content;
+            }
+            else{
+              explain = '添加失败，请稍后再试';
+            }
+            se.$alert(explain, '新增结果', {
+              confirmButtonText: '确定',
             });
-        }
-        catch(exception){
-          console.log(exception);
-        }
-        var explain = '';
-        if(success == null){
-          explain = '网络错误，请稍后再试'
-        } else if(success){
-          explain = '添加成功，生成的订单号为'+newId;
-        } else {
-          explain = '添加失败，请稍后再试'
-        }
-        this.$alert(explain, '新增结果', {
-          confirmButtonText: '确定',
-        });
+          });
       },
       initTable(){
         // var TD = [
@@ -188,24 +173,20 @@
         // this.tableData = TD;
         var se = this;
         this.tableData = [];
-        try{
-          axios.get('/product/all')
-            .then(request => {
-              var res = request.data;
-              console.log(res);
-              if(res.ret){
-                for(var i = 0; i< res.content.length; i++){
-                  var temp = {
-                    id: res.content[i],
-                    describe: '暂无',
-                  };
-                  se.tableData.push(temp);
-                }
+        axios.get('/product/all')
+          .then(request => {
+            var res = request.data;
+            console.log(res);
+            if(res.ret){
+              for(var i = 0; i< res.content.length; i++){
+                var temp = {
+                  id: res.content[i],
+                  describe: '暂无',
+                };
+                se.tableData.push(temp);
               }
-            });          
-        }catch(e){
-          console.log(e);
-        }
+            }
+          });
       },
     },
     mounted() {
